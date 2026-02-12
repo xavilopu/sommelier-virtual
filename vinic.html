@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VINIC | Sommelier Virtual</title>
+    <style>
+        :root {
+            --bg: #f9f7f2;
+            --primary: #2c2c2c;
+            --accent: #6b1111;
+            --text-light: #666;
+            --border: #e0ddd5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--primary); 
+            font-family: 'Georgia', serif; 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Capçalera amb el nou logo */
+        header {
+            background-color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .vinic-logo {
+            font-family: 'Georgia', serif; /* o una font serif elegant de Google Fonts */
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: var(--primary);
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            line-height: 1; /* Per ajustar la línia */
+        }
+
+        .vinic-logo::after {
+            content: '';
+            display: block;
+            width: 40px; /* Llargada de la línia */
+            height: 1px; /* Gruix de la línia */
+            background: var(--accent);
+            margin: 5px auto 0 auto; /* Centrar la línia sota el text */
+        }
+        /* Fi logo */
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .screen { display: none; animation: fadeIn 0.8s ease; width: 100%; }
+        .screen.active { display: flex; flex-direction: column; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Logo Restaurant - ara s'anomena "Brand Box" */
+        .brand-box {
+            border: 1px solid var(--primary);
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .brand-box span { font-size: 0.8rem; letter-spacing: 3px; display: block; margin-bottom: 0.5rem; }
+        .brand-box h1 { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; }
+
+        h2.title { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 400; line-height: 1.3; }
+        p.subtitle { color: var(--text-light); margin-bottom: 2.5rem; font-style: italic; }
+
+        /* Botons */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .btn-option {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            text-align: left;
+            padding-left: 1.5rem;
+        }
+
+        .btn-option:active { background-color: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Cards de Vi */
+        .wine-card {
+            background: white;
+            padding: 0;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wine-image-container {
+            background-color: #fcfcfc;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .wine-image {
+            height: 250px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+        }
+
+        .wine-info { padding: 1.5rem; }
+        .wine-card .meta { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .wine-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 400; }
+        .wine-card .desc { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; }
+        .wine-card .price { font-size: 1.1rem; border-top: 1px solid var(--border); pt: 1rem; padding-top: 1rem; display: block; }
+
+        .refresh-link {
+            text-align: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="vinic-logo">VINIC</div>
+    </header>
+
+    <div class="container">
+        
+        <div id="screen-start" class="screen active">
+            <div class="brand-box">
+                <span>RESTAURANT</span>
+                <h1>El Teu Restaurant</h1>
+            </div>
+            <h2 class="title">L'harmonia perfecta entre plat i copa</h2>
+            <p class="subtitle">Permeteu-nos guiar-vos a través de la nostra selecció de vins de la terra.</p>
+            <button class="btn" onclick="goToStep(1)">Començar la tria</button>
+        </div>
+
+        <div id="screen-q1" class="screen">
+            <h2 class="title">Quin tipus de vi desitgeu?</h2>
+            <button class="btn btn-option" onclick="selectOption('tipus', 'Escumós')">Escumós</button>
+            <button class="btn btn-option" onclick="selectOption('tipus', 'Blanc')">Blanc</button>
+            <button class="btn btn-option" onclick="selectOption('tipus', 'Rosat')">Rosat</button>
+            <button class="btn btn-option" onclick="selectOption('tipus', 'Negre')">Negre</button>
+        </div>
+
+        <div id="screen-q2" class="screen">
+            <h2 class="title">Quin estil preferiu?</h2>
+            <button class="btn btn-option" onclick="selectOption('estil', 'Aromàtic')">Aromàtic i floral</button>
+            <button class="btn btn-option" onclick="selectOption('estil', 'Sec')">Sec i amb cos</button>
+        </div>
+
+        <div id="screen-q3" class="screen">
+            <h2 class="title">Quin plat acompanyarem?</h2>
+            <button class="btn btn-option" onclick="selectOption('maridatge', 'Amanida')">Amanida o entrants</button>
+            <button class="btn btn-option" onclick="selectOption('maridatge', 'Peix')">Peix o marisc</button>
+            <button class="btn btn-option" onclick="selectOption('maridatge', 'Carn')">Carns blanques o vermelles</button>
+            <button class="btn btn-option" onclick="selectOption('maridatge', 'Pasta/pizza')">Pasta o cuina mediterrània</button>
+        </div>
+
+        <div id="screen-q4" class="screen">
+            <h2 class="title">Quin és el vostre nivell d’atreviment?</h2>
+            <button class="btn btn-option" onclick="selectOption('atreviment', 'Clàssic')">Clàssic (referents segurs)</button>
+            <button class="btn btn-option" onclick="selectOption('atreviment', 'Moderat')">Moderat (noves sensacions)</button>
+            <button class="btn btn-option" onclick="selectOption('atreviment', 'Alt')">Alt (varietats singulars)</button>
+        </div>
+
+        <div id="screen-q5" class="screen">
+            <h2 class="title">Pressupost màxim</h2>
+            <button class="btn btn-option" onclick="selectOption('preu', 20)">Fins a 20€</button>
+            <button class="btn btn-option" onclick="selectOption('preu', 35)">Fins a 35€</button>
+            <button class="btn btn-option" onclick="selectOption('preu', 60)">Fins a 60€</button>
+            <button class="btn btn-option" onclick="selectOption('preu', 100)">Fins a 100€</button>
+        </div>
+
+        <div id="screen-results" class="screen">
+            <h2 class="title" style="text-align: center;">La nostra recomanació</h2>
+            <p class="subtitle" style="text-align: center; margin-bottom: 2rem;">Vins seleccionats pel seu caràcter i origen.</p>
+            <div id="wine-list"></div>
+            <a href="#" class="refresh-link" onclick="resetApp()">Nova recomanació</a>
+        </div>
+
+    </div>
+
+    <script>
+        const vins = [
+            // BLANCS
+            { 
+                nom: "Pansa Blanca Alta Alella", 
+                tipus: "Blanc", estil: "Aromàtic", preu: 16, varietat: "Pansa Blanca", origen: "DO Alella", any: "2023", atreviment: "Clàssic",
+                imatge: "https://www.altaalella.wine/wp-content/uploads/2023/07/AA-Pansa-Blanca-2023-copa.png",
+                desc: "Expressió mediterrània amb notes de fruita blanca i flors." 
+            },
+            { 
+                nom: "Abadal Picapoll", 
+                tipus: "Blanc", estil: "Aromàtic", preu: 18, varietat: "Picapoll", origen: "DO Pla de Bages", any: "2023", atreviment: "Moderat",
+                imatge: "https://abadal.net/wp-content/uploads/2024/02/Abadal-Picapoll-2023-FOC-300x300.png",
+                desc: "L'ànima del Bages. Notes cítriques i final d'herbes aromàtiques." 
+            },
+            { 
+                nom: "Can Sumoi Xarel·lo", 
+                tipus: "Blanc", estil: "Sec", preu: 19, varietat: "Xarel·lo", origen: "Baix Penedès", any: "2022", atreviment: "Alt",
+                imatge: "https://cansumoi.com/wp-content/uploads/2023/04/Can-Sumoi-Xarello-2022.png",
+                desc: "Vi natural d'altitud, rústic, fresc i molt sincer." 
+            },
+            { 
+                nom: "Castell d'Encús Ekam", 
+                tipus: "Blanc", estil: "Sec", preu: 38, varietat: "Riesling", origen: "Costers del Segre", any: "2021", atreviment: "Alt",
+                imatge: "https://www.castelldencus.com/wp-content/uploads/2023/03/ekam_web-300x300.png",
+                desc: "Vi de Pirineu amb acidesa vibrant i gran capacitat de guarda." 
+            },
+            { 
+                nom: "Acústic Blanc", 
+                tipus: "Blanc", estil: "Sec", preu: 17, varietat: "Garnatxa Blanca", origen: "DO Montsant", any: "2022", atreviment: "Clàssic",
+                imatge: "https://www.acusticceller.com/wp-content/uploads/2022/07/BOTELLA-ACUSTIC-BLANC.png",
+                desc: "Complexitat i volum amb un toc mineral molt personal." 
+            },
+            
+            // NEGRES
+            { 
+                nom: "Gotes del Priorat", 
+                tipus: "Negre", estil: "Aromàtic", preu: 22, varietat: "Garnatxa, Carinyena", origen: "DOQ Priorat", any: "2021", atreviment: "Moderat",
+                imatge: "https://www.closfigueras.com/wp-content/uploads/2021/11/gotes-priorat.png",
+                desc: "Fresc i mineral, buscant la cara més amable del Priorat." 
+            },
+            { 
+                nom: "Ferrer Bobet", 
+                tipus: "Negre", estil: "Sec", preu: 42, varietat: "Carinyena", origen: "DOQ Priorat", any: "2020", atreviment: "Clàssic",
+                imatge: "https://www.ferrerbobet.com/wp-content/uploads/2023/06/FVV-2020-frente-300x300.png",
+                desc: "Elegància extrema i profunditat de vinyes velles de llicorella." 
+            },
+            { 
+                nom: "Venus de la Figuera", 
+                tipus: "Negre", estil: "Aromàtic", preu: 58, varietat: "Garnatxa", origen: "DO Montsant", any: "2019", atreviment: "Alt",
+                imatge: "https://www.venuslafiguera.com/wp-content/uploads/2023/04/venus-de-la-figuera-tinto.png",
+                desc: "Una joia limitada: subtilesa, feminitat i flors en copa." 
+            },
+            { 
+                nom: "7 Pams", 
+                tipus: "Negre", estil: "Sec", preu: 28, varietat: "Garnatxa, Carinyena", origen: "DO Empordà", any: "2020", atreviment: "Moderat",
+                imatge: "https://masllunes.com/wp-content/uploads/2022/03/7-PAMS-NEGRE-2020-2D-300x300.png",
+                desc: "Caràcter de tramuntana: intens, especiat i persistent." 
+            },
+            { 
+                nom: "Indigena", 
+                tipus: "Negre", estil: "Aromàtic", preu: 15, varietat: "Garnatxa", origen: "DO Penedès", any: "2022", atreviment: "Clàssic",
+                imatge: "https://cellercredence.com/wp-content/uploads/2022/03/Indigena-Garnacha-2022.png",
+                desc: "Fruita vermella fresca i pura, sense complicacions." 
+            },
+            { 
+                nom: "Clos Mogador", 
+                tipus: "Negre", estil: "Sec", preu: 95, varietat: "Cupatge", origen: "DOQ Priorat", any: "2020", atreviment: "Clàssic",
+                imatge: "https://www.closmogador.com/wp-content/uploads/2023/03/clos-mogador-2020.png",
+                desc: "Un dels grans clàssics del món, estructura i emoció pura." 
+            },
+
+            // ESCUMOSOS
+            { 
+                nom: "Llopart Brut Rosé", 
+                tipus: "Escumós", estil: "Aromàtic", preu: 22, varietat: "Monastrell", origen: "Corpinnat", any: "2021", atreviment: "Clàssic",
+                imatge: "https://llopart.com/wp-content/uploads/2022/04/Brut-Rose-llopart-copa.png",
+                desc: "Escumós rosat alegre, notes de cirera i bombolla integrada." 
+            },
+            { 
+                nom: "Recaredo Terrers", 
+                tipus: "Escumós", estil: "Sec", preu: 32, varietat: "Cupatge", origen: "Corpinnat", any: "2018", atreviment: "Moderat",
+                imatge: "https://recaredo.com/wp-content/uploads/2023/03/Recaredo-Terrers-Brut-Nature-Gran-Reserva.png",
+                desc: "Totalment sec, biodinàmic i amb llarga criança en rima." 
+            },
+            { 
+                nom: "Gramona Imperial", 
+                tipus: "Escumós", estil: "Sec", preu: 35, varietat: "Cupatge", origen: "Corpinnat", any: "2017", atreviment: "Clàssic",
+                imatge: "https://gramona.com/wp-content/uploads/2022/11/Imperial-brut-gramona-copa.png",
+                desc: "Elegància atemporal amb notes de brioche i fruita madura." 
+            },
+            { 
+                nom: "Mestres Coquet", 
+                tipus: "Escumós", estil: "Sec", preu: 20, varietat: "Cupatge", origen: "DO Cava", any: "2019", atreviment: "Clàssic",
+                imatge: "https://mestres.es/wp-content/uploads/2022/05/Mestres-Coquet-Reserva-Brut.png",
+                desc: "Un cava amb caràcter, ideal per a tot un àpat." 
+            },
+
+            // ROSATS
+            { 
+                nom: "Saurí Rosat", 
+                tipus: "Rosat", estil: "Aromàtic", preu: 14, varietat: "Lledoner", origen: "DO Empordà", any: "2023", atreviment: "Moderat",
+                imatge: "https://cellercostabrawa.com/wp-content/uploads/2023/03/Saun-Rosat-300x300.png",
+                desc: "Rosat pàl·lid, elegant i molt refrescant." 
+            },
+            { 
+                nom: "Scala Dei Pla dels Àngels", 
+                tipus: "Rosat", estil: "Sec", preu: 25, varietat: "Garnatxa", origen: "DOQ Priorat", any: "2023", atreviment: "Alt",
+                imatge: "https://scaladei.com/wp-content/uploads/2023/03/pla-dels-angels-rosat.png",
+                desc: "El prestigi del Priorat en versió rosada: mineralitat i fruita." 
+            }
+        ];
+
+        let respostes = {};
+
+        function goToStep(step) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const screens = ['screen-start', 'screen-q1', 'screen-q2', 'screen-q3', 'screen-q4', 'screen-q5', 'screen-results'];
+            document.getElementById(screens[step]).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function selectOption(key, value) {
+            respostes[key] = value;
+            const currentScreen = document.querySelector('.screen.active').id;
+            const stepNum = parseInt(currentScreen.split('q')[1]) || 0;
+            
+            if (stepNum < 5) {
+                goToStep(stepNum + 1);
+            } else {
+                mostrarResultats();
+                goToStep(6);
+            }
+        }
+
+        function mostrarResultats() {
+            const list = document.getElementById('wine-list');
+            list.innerHTML = "";
+
+            // FILTRATGE INTEL·LIGENT
+            let filtrats = vins.filter(v => v.tipus === respostes.tipus);
+            
+            // Filtre de preu
+            let perPreu = filtrats.filter(v => v.preu <= respostes.preu);
+            if (perPreu.length > 0) filtrats = perPreu;
+
+            // Ordenació per atreviment i estil
+            filtrats.sort((a, b) => {
+                let scoreA = (a.atreviment === respostes.atreviment ? 2 : 0) + (a.estil === respostes.estil ? 1 : 0);
+                let scoreB = (b.atreviment === respostes.atreviment ? 2 : 0) + (b.estil === respostes.estil ? 1 : 0);
+                return scoreB - scoreA;
+            });
+
+            // Selecció dels 2 millors
+            const seleccionats = filtrats.slice(0, 2);
+
+            seleccionats.forEach(vi => {
+                const card = document.createElement('div');
+                card.className = 'wine-card';
+                card.innerHTML = `
+                    <div class="wine-image-container">
+                        <img src="${vi.imatge}" class="wine-image" alt="${vi.nom}">
+                    </div>
+                    <div class="wine-info">
+                        <div class="meta">${vi.origen} · ${vi.varietat} · ${vi.any}</div>
+                        <h3>${vi.nom}</h3>
+                        <p class="desc">${vi.desc}</p>
+                        <span class="price">${vi.preu}€</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function resetApp() {
+            respostes = {};
+            goToStep(0);
+        }
+    </script>
+</body>
+</html>
