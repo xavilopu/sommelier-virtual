@@ -1,0 +1,11 @@
+tipus,estil,atreviment,preu_max,vi_id_1,vi_id_2
+Blanc,Aromàtic,Clàssic,20,V01,V02
+Blanc,Aromàtic,Moderat,20,V02,V01
+Blanc,Sec,Alt,20,V03,V02
+Negre,Aromàtic,Clàssic,20,V06,V04
+Negre,Aromàtic,Moderat,35,V04,V06
+Negre,Sec,Clàssic,60,V05,V04
+Escumós,Aromàtic,Clàssic,35,V07,V08
+Escumós,Sec,Moderat,35,V08,V07
+Rosat,Aromàtic,Moderat,20,V09,V10
+Rosat,Sec,Alt,35,V10,V09
