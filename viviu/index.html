@@ -5,50 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIVIU | Sommelier Virtual</title>
     <style>
-        :root { --bg: #fdfcf9; --primary: #1a1a1a; --accent: #8b0000; --border: #e8e4db; }
-        body { font-family: 'Georgia', serif; background: var(--bg); color: var(--primary); margin: 0; line-height: 1.6; }
-        header { padding: 1.5rem; text-align: center; background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.logo-viviu { 
-        font-size: 1.3rem; 
-        font-weight: bold; 
-        letter-spacing: 5px; 
-        text-transform: uppercase; 
-        display: inline-block;
-        position: relative; /* Necessari per posicionar la línia */
-    }
+        :root { 
+            --bg: #fdfcf9; 
+            --primary: #1a1a1a; 
+            --accent: #8b0000; 
+            --border: #e8e4db; 
+            --text-muted: #555;
+        }
 
-    .logo-viviu::after { 
-        content: ''; 
-        display: block; 
-        /* Calculem l'amplada per cobrir les dues primeres lletres + espaiat */
-        width: 38px; 
-        height: 2px; 
-        background: var(--accent); 
-        margin-top: 6px;
-        position: absolute;
-        left: 0; /* Aliniat a l'esquerra */        .container { max-width: 450px; margin: 0 auto; padding: 2rem 1.5rem; }
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Georgia', serif; 
+            background: var(--bg); 
+            color: var(--primary); 
+            margin: 0; 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Capçalera i Logo VIVIU */
+        header { 
+            padding: 2rem; 
+            text-align: center; 
+            background: white; 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
+        }
+
+        .logo-viviu { 
+            font-size: 1.3rem; 
+            font-weight: bold; 
+            letter-spacing: 5px; 
+            text-transform: uppercase; 
+            display: inline-block;
+            position: relative;
+            line-height: 1;
+        }
+
+        .logo-viviu::after { 
+            content: ''; 
+            display: block; 
+            width: 38px; /* Cobreix aproximadament "VI" */
+            height: 2px; 
+            background: var(--accent); 
+            margin-top: 6px;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Contenidor i Estructura */
+        .container { 
+            max-width: 450px; 
+            margin: 0 auto; 
+            padding: 2.5rem 1.5rem; 
+        }
+
         .screen { display: none; }
         .screen.active { display: block; animation: fadeIn 0.4s ease; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        h2 { font-weight: 400; font-size: 1.6rem; margin-bottom: 2rem; }
-        .btn { width: 100%; padding: 1.2rem; margin-bottom: 0.8rem; background: transparent; border: 1px solid var(--border); font-family: inherit; font-size: 0.95rem; cursor: pointer; text-align: left; }
-        .btn:active { background: #f4f1ea; border-color: var(--primary); }
-        .btn-main { background: var(--primary); color: white; text-align: center; text-transform: uppercase; letter-spacing: 1px; margin-top: 2rem; }
-        .wine-card { background: white; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; position: relative; }
-        .wine-meta { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: block; }
-        .wine-name { font-size: 1.2rem; margin: 0 0 0.5rem 0; font-weight: 400; }
-        .wine-desc { font-size: 0.9rem; color: #555; font-style: italic; }
-        .wine-price { display: block; margin-top: 1rem; font-weight: bold; border-top: 1px solid #f0f0f0; padding-top: 0.5rem; }
+
+        h2 { font-weight: 400; font-size: 1.7rem; margin-bottom: 2rem; line-height: 1.3; }
+
+        /* Botons */
+        .btn { 
+            width: 100%; 
+            padding: 1.2rem; 
+            margin-bottom: 1rem; 
+            background: white; 
+            border: 1px solid var(--border); 
+            font-family: inherit; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .btn:active { 
+            background: #f4f1ea; 
+            border-color: var(--primary); 
+            transform: translateY(1px);
+        }
+
+        .btn-main { 
+            background: var(--primary); 
+            color: white; 
+            text-align: center; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Resultats (Sense Imatge) */
+        .wine-card { 
+            background: white; 
+            border: 1px solid var(--border); 
+            padding: 1.8rem; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .wine-meta { 
+            font-size: 0.75rem; 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: 0.8rem; 
+            display: block; 
+        }
+
+        .wine-name { 
+            font-size: 1.3rem; 
+            margin: 0 0 0.6rem 0; 
+            font-weight: 400; 
+        }
+
+        .wine-desc { 
+            font-size: 0.95rem; 
+            color: var(--text-muted); 
+            font-style: italic; 
+            margin-bottom: 1.2rem;
+        }
+
+        .wine-price { 
+            display: block; 
+            font-weight: bold; 
+            font-size: 1.1rem;
+            border-top: 1px solid #f2efeb; 
+            padding-top: 0.8rem; 
+        }
+
+        .loader { text-align: center; padding: 2rem; font-style: italic; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<header><div class="logo-viviu">VIVIU</div></header>
+<header>
+    <div class="logo-viviu">VIVIU</div>
+</header>
 
 <div class="container">
     <div id="screen-start" class="screen active">
         <h2>Troba el vi ideal per al teu moment.</h2>
-        <button class="btn btn-main" onclick="next('q1')">Començar</button>
+        <div id="loading-msg" class="loader">Carregant carta de vins...</div>
+        <button id="start-btn" class="btn btn-main" onclick="next('q1')" style="display:none;">Començar</button>
     </div>
 
     <div id="screen-q1" class="screen">
@@ -82,23 +186,24 @@
     <div id="screen-results" class="screen">
         <h2>La nostra selecció:</h2>
         <div id="result-list"></div>
-        <button class="btn" onclick="location.reload()" style="text-align:center; margin-top:2rem;">Nova cerca</button>
+        <button class="btn btn-main" onclick="location.reload()" style="background:none; color:var(--primary); border:none; text-decoration:underline;">Nova cerca</button>
     </div>
 </div>
 
 <script>
-let choices = {};
+    let choices = {};
     let vins = [];
     let matriu = [];
 
+    // Funció per carregar i netejar CSVs
     async function load() {
         const toObj = (t) => {
-            const lines = t.trim().split(/\r?\n/); // Gestió de salts de línia Windows/Mac
-            const h = lines[0].split(',').map(x => x.trim().toLowerCase()); // Columnes en minúscules
+            const lines = t.trim().split(/\r?\n/);
+            const headers = lines[0].split(',').map(x => x.trim().toLowerCase());
             return lines.slice(1).map(l => {
-                const d = l.split(',');
-                return h.reduce((acc, cur, i) => {
-                    if (d[i]) acc[cur] = d[i].trim();
+                const data = l.split(',');
+                return headers.reduce((acc, cur, i) => {
+                    if (data[i] !== undefined) acc[cur] = data[i].trim();
                     return acc;
                 }, {});
             });
@@ -106,15 +211,21 @@ let choices = {};
 
         try {
             const [vRes, mRes] = await Promise.all([
-                fetch('vins.csv').then(res => res.text()),
-                fetch('recomanacions.csv').then(res => res.text())
+                fetch('vins.csv').then(r => r.text()),
+                fetch('recomanacions.csv').then(r => r.text())
             ]);
+            
             vins = toObj(vRes);
             matriu = toObj(mRes);
-            console.log("Vins carregats:", vins);
-            console.log("Matriu carregada:", matriu);
+
+            // Mostrar el botó quan les dades estiguin llestes
+            document.getElementById('loading-msg').style.display = 'none';
+            document.getElementById('start-btn').style.display = 'block';
+            
+            console.log("Dades carregades correctament.");
         } catch (e) {
-            console.error("Error carregant els fitxers CSV:", e);
+            document.getElementById('loading-msg').innerText = "Error carregar dades. Revisa els fitxers CSV.";
+            console.error(e);
         }
     }
 
@@ -131,34 +242,32 @@ let choices = {};
     }
 
     function procesar() {
-        const resultList = document.getElementById('result-list');
+        const list = document.getElementById('result-list');
         
-        // Busquem a la matriu (convertint a minúscules per comparar)
+        // Cerca intel·ligent a la matriu
         let match = matriu.find(r => 
             r.tipus === choices.tipus && 
             r.estil === choices.estil && 
             r.atreviment === choices.atreviment
         );
 
-        // Si no hi ha match perfecte, busquem només per tipus
+        // Fallback si no hi ha coincidència exacta
+        if (!match) match = matriu.find(r => r.tipus === choices.tipus);
+        
         if (!match) {
-            match = matriu.find(r => r.tipus === choices.tipus);
-        }
-
-        if (!match) {
-            resultList.innerHTML = "<p>No hem trobat una combinació exacta. Prova amb altres filtres.</p>";
+            list.innerHTML = "<p>No hem trobat vins que coincideixin exactament. Prova una altra selecció.</p>";
             return;
         }
 
         const ids = [match.vi_id_1, match.vi_id_2];
-        const resultats = vins.filter(v => ids.includes(v.id));
+        const seleccionats = vins.filter(v => ids.includes(v.id));
 
-        if (resultats.length === 0) {
-            resultList.innerHTML = "<p>S'ha trobat la recomanació però els IDs dels vins no coincideixen al fitxer vins.csv.</p>";
+        if (seleccionats.length === 0) {
+            list.innerHTML = "<p>Hi ha hagut un problema en trobar els detalls del vi.</p>";
             return;
         }
 
-        resultList.innerHTML = resultats.map(v => `
+        list.innerHTML = seleccionats.map(v => `
             <div class="wine-card">
                 <span class="wine-meta">${v.origen} · ${v.tipus}</span>
                 <h3 class="wine-name">${v.nom}</h3>
@@ -168,7 +277,7 @@ let choices = {};
         `).join('');
     }
 
-    load();    
+    load();
 </script>
 </body>
 </html>
