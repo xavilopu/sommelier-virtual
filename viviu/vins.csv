@@ -1,1 +1,11 @@
-
+id,nom,tipus,estil,atreviment,preu,origen,desc
+V01,Alta Alella Pansa Blanca,Blanc,Aromàtic,Clàssic,16,DO Alella,Fresc i amb notes de fruita blanca.
+V02,Abadal Picapoll,Blanc,Aromàtic,Moderat,18,DO Pla de Bages,Cítric i amb final d'herbes aromàtiques.
+V03,Can Sumoi Xarel·lo,Blanc,Sec,Alt,19,Penedès,Vi natural amb caràcter i molta puresa.
+V04,Gotes del Priorat,Negre,Aromàtic,Moderat,22,DOQ Priorat,Fruita vermella i mineralitat suau.
+V05,Ferrer Bobet,Negre,Sec,Clàssic,42,DOQ Priorat,Elegància i profunditat de vinyes velles.
+V06,Indigena Garnatxa,Negre,Aromàtic,Clàssic,15,DO Penedès,Molt llaminer i fàcil de beure.
+V07,Llopart Brut Rosé,Escumós,Aromàtic,Clàssic,22,Corpinnat,Notes de maduixa i bombolla molt fina.
+V08,Recaredo Terrers,Escumós,Sec,Moderat,32,Corpinnat,Complexitat i criança extrema.
+V09,Saurí Rosat,Rosat,Aromàtic,Moderat,14,DO Empordà,Fresc i ideal per a aperitius.
+V10,Scala Dei Pla dels Àngels,Rosat,Sec,Alt,25,DOQ Priorat,Un rosat amb cos i ànima de negre.
