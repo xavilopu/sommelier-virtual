@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVIU | Sommelier Virtual</title>
+    <style>
+        :root { --bg: #fdfcf9; --primary: #1a1a1a; --accent: #8b0000; --border: #e8e4db; }
+        body { font-family: 'Georgia', serif; background: var(--bg); color: var(--primary); margin: 0; line-height: 1.6; }
+        header { padding: 1.5rem; text-align: center; background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+        .logo-viviu { font-size: 1.3rem; font-weight: bold; letter-spacing: 5px; text-transform: uppercase; display: inline-block; }
+        .logo-viviu::after { content: ''; display: block; width: 35px; height: 1px; background: var(--accent); margin: 6px auto 0; }
+        .container { max-width: 450px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h2 { font-weight: 400; font-size: 1.6rem; margin-bottom: 2rem; }
+        .btn { width: 100%; padding: 1.2rem; margin-bottom: 0.8rem; background: transparent; border: 1px solid var(--border); font-family: inherit; font-size: 0.95rem; cursor: pointer; text-align: left; }
+        .btn:active { background: #f4f1ea; border-color: var(--primary); }
+        .btn-main { background: var(--primary); color: white; text-align: center; text-transform: uppercase; letter-spacing: 1px; margin-top: 2rem; }
+        .wine-card { background: white; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; position: relative; }
+        .wine-meta { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: block; }
+        .wine-name { font-size: 1.2rem; margin: 0 0 0.5rem 0; font-weight: 400; }
+        .wine-desc { font-size: 0.9rem; color: #555; font-style: italic; }
+        .wine-price { display: block; margin-top: 1rem; font-weight: bold; border-top: 1px solid #f0f0f0; padding-top: 0.5rem; }
+    </style>
+</head>
+<body>
+
+<header><div class="logo-viviu">VIVIU</div></header>
+
+<div class="container">
+    <div id="screen-start" class="screen active">
+        <h2>Troba el vi ideal per al teu moment.</h2>
+        <button class="btn btn-main" onclick="next('q1')">Començar</button>
+    </div>
+
+    <div id="screen-q1" class="screen">
+        <h2>Quin tipus de vi prefereixes?</h2>
+        <button class="btn" onclick="save('tipus', 'Blanc', 'q2')">Blanc</button>
+        <button class="btn" onclick="save('tipus', 'Negre', 'q2')">Negre</button>
+        <button class="btn" onclick="save('tipus', 'Escumós', 'q2')">Escumós</button>
+        <button class="btn" onclick="save('tipus', 'Rosat', 'q2')">Rosat</button>
+    </div>
+
+    <div id="screen-q2" class="screen">
+        <h2>Quin estil busques?</h2>
+        <button class="btn" onclick="save('estil', 'Aromàtic', 'q3')">Lleuger i Aromàtic</button>
+        <button class="btn" onclick="save('estil', 'Sec', 'q3')">Sec i amb cos</button>
+    </div>
+
+    <div id="screen-q3" class="screen">
+        <h2>Nivell d'atreviment</h2>
+        <button class="btn" onclick="save('atreviment', 'Clàssic', 'q4')">Clàssic</button>
+        <button class="btn" onclick="save('atreviment', 'Moderat', 'q4')">Moderat</button>
+        <button class="btn" onclick="save('atreviment', 'Alt', 'q4')">Alt</button>
+    </div>
+
+    <div id="screen-q4" class="screen">
+        <h2>Pressupost màxim</h2>
+        <button class="btn" onclick="save('preu', '20', 'results')">Fins a 20€</button>
+        <button class="btn" onclick="save('preu', '40', 'results')">Fins a 40€</button>
+        <button class="btn" onclick="save('preu', '100', 'results')">Sense límit</button>
+    </div>
+
+    <div id="screen-results" class="screen">
+        <h2>La nostra selecció:</h2>
+        <div id="result-list"></div>
+        <button class="btn" onclick="location.reload()" style="text-align:center; margin-top:2rem;">Nova cerca</button>
+    </div>
+</div>
+
+<script>
+    let choices = {};
+    let vins = [];
+    let matriu = [];
+
+    async function load() {
+        const toObj = (t) => {
+            const lines = t.trim().split('\n');
+            const h = lines[0].split(',').map(x => x.trim());
+            return lines.slice(1).map(l => {
+                const d = l.split(',');
+                return h.reduce((acc, cur, i) => ({...acc, [cur]: d[i]?.trim()}), {});
+            });
+        };
+        const [vRes, mRes] = await Promise.all([fetch('vins.csv'), fetch('recomanacions.csv')]);
+        vins = toObj(await vRes.text());
+        matriu = toObj(await mRes.text());
+    }
+
+    function save(k, v, s) {
+        choices[k] = v;
+        if(s === 'results') { procesar(); }
+        next(s);
+    }
+
+    function next(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function procesar() {
+        // Lògica de cerca: busquem la millor coincidència a la matriu
+        let match = matriu.find(r => r.tipus === choices.tipus && r.estil === choices.estil && r.atreviment === choices.atreviment) 
+                 || matriu.find(r => r.tipus === choices.tipus) 
+                 || matriu[0];
+
+        const ids = [match.vi_id_1, match.vi_id_2];
+        const resultats = vins.filter(v => ids.includes(v.id));
+
+        document.getElementById('result-list').innerHTML = resultats.map(v => `
+            <div class="wine-card">
+                <span class="wine-meta">${v.origen} · ${v.tipus}</span>
+                <h3 class="wine-name">${v.nom}</h3>
+                <p class="wine-desc">${v.desc}</p>
+                <span class="wine-price">${v.preu}€</span>
+            </div>
+        `).join('');
+    }
+
+    load();
+</script>
+</body>
+</html>
