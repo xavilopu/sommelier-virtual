@@ -71,22 +71,35 @@
 </div>
 
 <script>
-    let choices = {};
+let choices = {};
     let vins = [];
     let matriu = [];
 
     async function load() {
         const toObj = (t) => {
-            const lines = t.trim().split('\n');
-            const h = lines[0].split(',').map(x => x.trim());
+            const lines = t.trim().split(/\r?\n/); // Gestió de salts de línia Windows/Mac
+            const h = lines[0].split(',').map(x => x.trim().toLowerCase()); // Columnes en minúscules
             return lines.slice(1).map(l => {
                 const d = l.split(',');
-                return h.reduce((acc, cur, i) => ({...acc, [cur]: d[i]?.trim()}), {});
+                return h.reduce((acc, cur, i) => {
+                    if (d[i]) acc[cur] = d[i].trim();
+                    return acc;
+                }, {});
             });
         };
-        const [vRes, mRes] = await Promise.all([fetch('vins.csv'), fetch('recomanacions.csv')]);
-        vins = toObj(await vRes.text());
-        matriu = toObj(await mRes.text());
+
+        try {
+            const [vRes, mRes] = await Promise.all([
+                fetch('vins.csv').then(res => res.text()),
+                fetch('recomanacions.csv').then(res => res.text())
+            ]);
+            vins = toObj(vRes);
+            matriu = toObj(mRes);
+            console.log("Vins carregats:", vins);
+            console.log("Matriu carregada:", matriu);
+        } catch (e) {
+            console.error("Error carregant els fitxers CSV:", e);
+        }
     }
 
     function save(k, v, s) {
@@ -102,15 +115,34 @@
     }
 
     function procesar() {
-        // Lògica de cerca: busquem la millor coincidència a la matriu
-        let match = matriu.find(r => r.tipus === choices.tipus && r.estil === choices.estil && r.atreviment === choices.atreviment) 
-                 || matriu.find(r => r.tipus === choices.tipus) 
-                 || matriu[0];
+        const resultList = document.getElementById('result-list');
+        
+        // Busquem a la matriu (convertint a minúscules per comparar)
+        let match = matriu.find(r => 
+            r.tipus === choices.tipus && 
+            r.estil === choices.estil && 
+            r.atreviment === choices.atreviment
+        );
+
+        // Si no hi ha match perfecte, busquem només per tipus
+        if (!match) {
+            match = matriu.find(r => r.tipus === choices.tipus);
+        }
+
+        if (!match) {
+            resultList.innerHTML = "<p>No hem trobat una combinació exacta. Prova amb altres filtres.</p>";
+            return;
+        }
 
         const ids = [match.vi_id_1, match.vi_id_2];
         const resultats = vins.filter(v => ids.includes(v.id));
 
-        document.getElementById('result-list').innerHTML = resultats.map(v => `
+        if (resultats.length === 0) {
+            resultList.innerHTML = "<p>S'ha trobat la recomanació però els IDs dels vins no coincideixen al fitxer vins.csv.</p>";
+            return;
+        }
+
+        resultList.innerHTML = resultats.map(v => `
             <div class="wine-card">
                 <span class="wine-meta">${v.origen} · ${v.tipus}</span>
                 <h3 class="wine-name">${v.nom}</h3>
@@ -120,7 +152,7 @@
         `).join('');
     }
 
-    load();
+    load();    
 </script>
 </body>
 </html>
