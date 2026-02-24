@@ -5,279 +5,265 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIVIU | Sommelier Virtual</title>
     <style>
-        :root { 
-            --bg: #fdfcf9; 
-            --primary: #1a1a1a; 
-            --accent: #8b0000; 
-            --border: #e8e4db; 
+        :root {
+            --bg: #fdfcf9;
+            --primary: #1a1a1a;
+            --accent: #8b0000;
+            --border: #e8e4db;
             --text-muted: #555;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Georgia', serif; background: var(--bg); color: var(--primary); margin: 0; line-height: 1.6; }
 
-        body { 
-            font-family: 'Georgia', serif; 
-            background: var(--bg); 
-            color: var(--primary); 
-            margin: 0; 
-            line-height: 1.6; 
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Capçalera i Logo VIVIU */
         header { 
-            padding: 2rem; 
-            text-align: center; 
-            background: white; 
-            border-bottom: 1px solid var(--border); 
-            position: sticky; 
-            top: 0; 
-            z-index: 10; 
+            padding: 2rem; text-align: center; background: white; 
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
         }
 
-        .logo-viviu { 
-            font-size: 1.3rem; 
-            font-weight: bold; 
-            letter-spacing: 5px; 
-            text-transform: uppercase; 
-            display: inline-block;
-            position: relative;
-            line-height: 1;
+        .logo-viviu {
+            font-size: 1.4rem; font-weight: bold; letter-spacing: 5px;
+            text-transform: uppercase; display: inline-block; position: relative;
+        }
+        .logo-viviu::after {
+            content: ''; position: absolute; left: 0; bottom: -6px;
+            width: 40px; height: 2px; background: var(--accent);
         }
 
-        .logo-viviu::after { 
-            content: ''; 
-            display: block; 
-            width: 38px; /* Cobreix aproximadament "VI" */
-            height: 2px; 
-            background: var(--accent); 
-            margin-top: 6px;
-            position: absolute;
-            left: 0;
+        .container { max-width: 500px; margin: 0 auto; padding: 2rem 1.5rem; min-height: 80vh; display: flex; flex-direction: column; }
+        
+        .screen { display: none; flex-direction: column; animation: fadeIn 0.3s ease-in-out; }
+        .screen.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-weight: 400; font-size: 1.6rem; margin-bottom: 1.5rem; line-height: 1.3; }
+        p.instr { color: var(--text-muted); font-style: italic; margin-top: -1rem; margin-bottom: 2rem; font-size: 0.9rem; }
+
+        .options-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+        
+        .btn {
+            width: 100%; padding: 1.2rem; background: white; border: 1px solid var(--border);
+            font-family: inherit; font-size: 1rem; cursor: pointer; text-align: left;
+            transition: all 0.2s;
         }
-
-        /* Contenidor i Estructura */
-        .container { 
-            max-width: 450px; 
-            margin: 0 auto; 
-            padding: 2.5rem 1.5rem; 
-        }
-
-        .screen { display: none; }
-        .screen.active { display: block; animation: fadeIn 0.4s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        h2 { font-weight: 400; font-size: 1.7rem; margin-bottom: 2rem; line-height: 1.3; }
-
-        /* Botons */
-        .btn { 
-            width: 100%; 
-            padding: 1.2rem; 
-            margin-bottom: 1rem; 
-            background: white; 
-            border: 1px solid var(--border); 
-            font-family: inherit; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-
-        .btn:active { 
-            background: #f4f1ea; 
-            border-color: var(--primary); 
-            transform: translateY(1px);
-        }
-
+        .btn:active, .btn.selected { border-color: var(--primary); background: #f4f1ea; }
+        
         .btn-main { 
-            background: var(--primary); 
-            color: white; 
-            text-align: center; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            margin-top: 2rem;
-            font-size: 0.9rem;
+            background: var(--primary); color: white; text-align: center; 
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-top: 1rem;
         }
 
-        /* Resultats (Sense Imatge) */
-        .wine-card { 
-            background: white; 
-            border: 1px solid var(--border); 
-            padding: 1.8rem; 
-            margin-bottom: 1.5rem; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
+        /* Slider */
+        .slider-container { margin: 3rem 0; text-align: center; }
+        input[type=range] { width: 100%; cursor: pointer; accent-color: var(--primary); }
+        .price-display { font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; }
 
-        .wine-meta { 
-            font-size: 0.75rem; 
-            color: var(--accent); 
-            text-transform: uppercase; 
-            letter-spacing: 1.5px; 
-            margin-bottom: 0.8rem; 
-            display: block; 
-        }
+        /* Navigation */
+        .nav-footer { margin-top: auto; padding-top: 2rem; display: flex; gap: 1rem; }
+        .btn-back { background: none; border: none; text-decoration: underline; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 1rem 0; }
 
-        .wine-name { 
-            font-size: 1.3rem; 
-            margin: 0 0 0.6rem 0; 
-            font-weight: 400; 
-        }
+        /* Result Cards */
+        .wine-card { background: white; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .wine-meta { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .wine-name { font-size: 1.25rem; margin: 0.5rem 0; font-weight: 400; text-transform: capitalize; }
+        .wine-desc { font-size: 0.9rem; color: var(--text-muted); font-style: italic; }
+        .wine-price { display: block; margin-top: 1rem; font-weight: bold; border-top: 1px dotted var(--border); padding-top: 0.5rem; }
 
-        .wine-desc { 
-            font-size: 0.95rem; 
-            color: var(--text-muted); 
-            font-style: italic; 
-            margin-bottom: 1.2rem;
-        }
-
-        .wine-price { 
-            display: block; 
-            font-weight: bold; 
-            font-size: 1.1rem;
-            border-top: 1px solid #f2efeb; 
-            padding-top: 0.8rem; 
-        }
-
-        .loader { text-align: center; padding: 2rem; font-style: italic; color: var(--text-muted); }
+        .loader { text-align: center; padding: 2rem; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-viviu">VIVIU</div>
-</header>
+<header><div class="logo-viviu">VIVIU</div></header>
 
 <div class="container">
     <div id="screen-start" class="screen active">
-        <h2>Troba el vi ideal per al teu moment.</h2>
-        <div id="loading-msg" class="loader">Carregant carta de vins...</div>
-        <button id="start-btn" class="btn btn-main" onclick="next('q1')" style="display:none;">Començar</button>
+        <h2 style="margin-top: 2rem;">Troba el vi ideal per al teu àpat</h2>
+        <div id="loading-status" class="loader">Carregant celler...</div>
+        <button id="btn-start" class="btn btn-main" style="display:none" onclick="goTo('q1')">Començar</button>
     </div>
 
     <div id="screen-q1" class="screen">
-        <h2>Quin tipus de vi prefereixes?</h2>
-        <button class="btn" onclick="save('tipus', 'Blanc', 'q2')">Blanc</button>
-        <button class="btn" onclick="save('tipus', 'Negre', 'q2')">Negre</button>
-        <button class="btn" onclick="save('tipus', 'Escumós', 'q2')">Escumós</button>
-        <button class="btn" onclick="save('tipus', 'Rosat', 'q2')">Rosat</button>
+        <h2>Quin tipus de VI et ve de gust avui?</h2>
+        <div class="options-grid">
+            <button class="btn" onclick="selectQ1('escumós')">Escumós (bombolles)</button>
+            <button class="btn" onclick="selectQ1('blanc')">Blanc</button>
+            <button class="btn" onclick="selectQ1('taronja')">Taronja (maceració amb pells)</button>
+            <button class="btn" onclick="selectQ1('rosat')">Rosat</button>
+            <button class="btn" onclick="selectQ1('negre')">Negre</button>
+        </div>
+        <div class="nav-footer">
+            <button class="btn-back" onclick="goTo('start')">Inici</button>
+        </div>
     </div>
 
     <div id="screen-q2" class="screen">
-        <h2>Quin estil busques?</h2>
-        <button class="btn" onclick="save('estil', 'Aromàtic', 'q3')">Lleuger i Aromàtic</button>
-        <button class="btn" onclick="save('estil', 'Sec', 'q3')">Sec i amb cos</button>
+        <h2 id="q2-title">Quin estil de VI busques?</h2>
+        <div id="q2-options" class="options-grid"></div>
+        <div class="nav-footer">
+            <button class="btn-back" onclick="goTo('q1')">Enrere</button>
+        </div>
     </div>
 
     <div id="screen-q3" class="screen">
-        <h2>Nivell d'atreviment</h2>
-        <button class="btn" onclick="save('atreviment', 'Clàssic', 'q4')">Clàssic</button>
-        <button class="btn" onclick="save('atreviment', 'Moderat', 'q4')">Moderat</button>
-        <button class="btn" onclick="save('atreviment', 'Alt', 'q4')">Alt</button>
+        <h2>Quin nivell d’atreviment busques?</h2>
+        <div class="options-grid">
+            <button class="btn" onclick="saveAndNext('atreviment', 'clàssic', 'q4')"><b>Clàssic:</b> vins tradicionals i reconeguts</button>
+            <button class="btn" onclick="saveAndNext('atreviment', 'una mica diferent', 'q4')"><b>Una mica diferent:</b> vins amb caràcter i personalitat</button>
+            <button class="btn" onclick="saveAndNext('atreviment', 'em vull deixar portar', 'q4')"><b>Em vull deixar portar:</b> sorpren-me amb alguna cosa especial</button>
+        </div>
+        <div class="nav-footer">
+            <button class="btn-back" onclick="goTo('q2')">Enrere</button>
+        </div>
     </div>
 
     <div id="screen-q4" class="screen">
-        <h2>Pressupost màxim</h2>
-        <button class="btn" onclick="save('preu', '20', 'results')">Fins a 20€</button>
-        <button class="btn" onclick="save('preu', '40', 'results')">Fins a 40€</button>
-        <button class="btn" onclick="save('preu', '100', 'results')">Sense límit</button>
+        <h2>Quin és el preu màxim que vols pagar pel teu VI?</h2>
+        <div class="slider-container">
+            <div class="price-display"><span id="price-val">60</span>€</div>
+            <input type="range" min="30" max="90" step="10" value="60" id="price-slider" oninput="updatePrice(this.value)">
+        </div>
+        <button class="btn btn-main" onclick="finalitze()">Veure recomanació</button>
+        <div class="nav-footer">
+            <button class="btn-back" onclick="goTo('q3')">Enrere</button>
+        </div>
     </div>
 
     <div id="screen-results" class="screen">
-        <h2>La nostra selecció:</h2>
+        <h2>La nostra recomanació</h2>
         <div id="result-list"></div>
-        <button class="btn btn-main" onclick="location.reload()" style="background:none; color:var(--primary); border:none; text-decoration:underline;">Nova cerca</button>
+        <div class="nav-footer" style="flex-direction: column; align-items: center;">
+            <button class="btn-back" onclick="goTo('q4')">Canviar preu</button>
+            <button class="btn-back" onclick="location.reload()">TORNAR A COMENÇAR</button>
+        </div>
     </div>
 </div>
 
 <script>
-    let choices = {};
-    let vins = [];
-    let matriu = [];
+    let db = [];
+    let answers = {};
 
-    // Funció per carregar i netejar CSVs
-    async function load() {
-        const toObj = (t) => {
-            const lines = t.trim().split(/\r?\n/);
-            const headers = lines[0].split(',').map(x => x.trim().toLowerCase());
-            return lines.slice(1).map(l => {
-                const data = l.split(',');
-                return headers.reduce((acc, cur, i) => {
-                    if (data[i] !== undefined) acc[cur] = data[i].trim();
-                    return acc;
-                }, {});
-            });
-        };
+    const fallbackDesc = "Un vi excepcional que representa l'essència de la seva zona, seleccionat pel seu caràcter autèntic i la seva qualitat artesanal.";
 
+    async function loadData() {
         try {
-            const [vRes, mRes] = await Promise.all([
-                fetch('vins.csv').then(r => r.text()),
-                fetch('recomanacions.csv').then(r => r.text())
-            ]);
+            const fetchCSV = (file) => fetch(file).then(r => r.text());
+            const [vinsText, attrText] = await Promise.all([fetchCSV('VINS.csv'), fetchCSV('ATRIBUTS.csv')]);
             
-            vins = toObj(vRes);
-            matriu = toObj(mRes);
+            const parse = (txt) => {
+                const lines = txt.trim().split(/\r?\n/);
+                const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+                return lines.slice(1).map(l => {
+                    const cells = l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // Regex per ignorar comes dins de cometes
+                    return header.reduce((obj, h, i) => {
+                        let val = cells[i]?.replace(/^"|"$/g, '').trim() || "";
+                        obj[h] = val;
+                        return obj;
+                    }, {});
+                });
+            };
 
-            // Mostrar el botó quan les dades estiguin llestes
-            document.getElementById('loading-msg').style.display = 'none';
-            document.getElementById('start-btn').style.display = 'block';
-            
-            console.log("Dades carregades correctament.");
+            const vins = parse(vinsText);
+            const attrs = parse(attrText);
+
+            // Unir dades
+            db = attrs.map(a => {
+                const info = vins.find(v => v['llistat de vins']?.toLowerCase() === a['llistat de vins']?.toLowerCase());
+                return {
+                    nom: a['llistat de vins'],
+                    tipus: a['quin és el tipus de vi que t\'agrada?']?.toLowerCase(),
+                    estil: a['estil']?.toLowerCase(),
+                    preu: parseInt(a['pressupost /preu']),
+                    atreviment: a['nivell d\'atreviment']?.toLowerCase(),
+                    zona: info?.['zona'] || "Catalunya",
+                    desc: info?.['descripció'] || fallbackDesc
+                };
+            }).filter(v => v.nom);
+
+            document.getElementById('loading-status').style.display = 'none';
+            document.getElementById('btn-start').style.display = 'block';
         } catch (e) {
-            document.getElementById('loading-msg').innerText = "Error carregar dades. Revisa els fitxers CSV.";
             console.error(e);
+            document.getElementById('loading-status').innerText = "Error en carregar les dades.";
         }
     }
 
-    function save(k, v, s) {
-        choices[k] = v;
-        if(s === 'results') { procesar(); }
-        next(s);
-    }
-
-    function next(id) {
+    function goTo(screenId) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('screen-' + screenId).classList.add('active');
         window.scrollTo(0,0);
     }
 
-    function procesar() {
+    function selectQ1(val) {
+        answers.tipus = val;
+        const opts = document.getElementById('q2-options');
+        const title = document.getElementById('q2-title');
+        title.innerText = `Quin estil de VI ${val} vols?`;
+        opts.innerHTML = '';
+
+        const estilos = {
+            'escumós': [['mètode ancestral', 'mètode ancestral (més fresc i bombolla fina)'], ['mètode tradicional', 'mètode tradicional (més clàssic)']],
+            'blanc': [['més aromàtic', 'més aromàtic (afruitat)'], ['menys aromàtic', 'menys aromàtic (sec)']],
+            'taronja': [['menys contacte amb les pells', 'menys contacte amb les pells (brisat, fresc)'], ['més contacte amb pells', 'més contacte amb pells (tanic i estructurat)']],
+            'rosat': [['més suau', 'més suau / afruitat'], ['més cos', 'més cos / menys afruitat']],
+            'negre': [['menys cos', 'més lleuger (sense criança)'], ['més cos', 'més cos (amb criança)']]
+        };
+
+        (estilos[val] || []).forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'btn';
+            b.innerText = o[1];
+            b.onclick = () => saveAndNext('estil', o[0], 'q3');
+            opts.appendChild(b);
+        });
+
+        goTo('q2');
+    }
+
+    function saveAndNext(key, val, nextScreen) {
+        answers[key] = val;
+        goTo(nextScreen);
+    }
+
+    function updatePrice(v) {
+        document.getElementById('price-val').innerText = v;
+        answers.preuMax = parseInt(v);
+    }
+
+    function finalitze() {
+        if(!answers.preuMax) answers.preuMax = 60;
+        
+        // FILTRATGE
+        let candidates = db.filter(v => v.tipus === answers.tipus);
+        
+        // Puntuació per proximitat
+        candidates.forEach(v => {
+            let score = 0;
+            if(v.estil === answers.estil) score += 10;
+            if(v.atreviment === answers.atreviment) score += 10;
+            if(v.preu <= answers.preuMax) score += 5;
+            // Penalització si es passa molt de preu
+            if(v.preu > answers.preuMax) score -= (v.preu - answers.preuMax);
+            v.score = score;
+        });
+
+        candidates.sort((a,b) => b.score - a.score);
+        const winners = candidates.slice(0, 2);
+
         const list = document.getElementById('result-list');
-        
-        // Cerca intel·ligent a la matriu
-        let match = matriu.find(r => 
-            r.tipus === choices.tipus && 
-            r.estil === choices.estil && 
-            r.atreviment === choices.atreviment
-        );
-
-        // Fallback si no hi ha coincidència exacta
-        if (!match) match = matriu.find(r => r.tipus === choices.tipus);
-        
-        if (!match) {
-            list.innerHTML = "<p>No hem trobat vins que coincideixin exactament. Prova una altra selecció.</p>";
-            return;
-        }
-
-        const ids = [match.vi_id_1, match.vi_id_2];
-        const seleccionats = vins.filter(v => ids.includes(v.id));
-
-        if (seleccionats.length === 0) {
-            list.innerHTML = "<p>Hi ha hagut un problema en trobar els detalls del vi.</p>";
-            return;
-        }
-
-        list.innerHTML = seleccionats.map(v => `
+        list.innerHTML = winners.length ? winners.map(v => `
             <div class="wine-card">
-                <span class="wine-meta">${v.origen} · ${v.tipus}</span>
+                <span class="wine-meta">${v.zona} · ${answers.tipus}</span>
                 <h3 class="wine-name">${v.nom}</h3>
                 <p class="wine-desc">${v.desc}</p>
                 <span class="wine-price">${v.preu}€</span>
             </div>
-        `).join('');
+        `).join('') : "<p>No hem trobat cap vi que s'ajusti als criteris. Prova d'ampliar el pressupost.</p>";
+
+        goTo('results');
     }
 
-    load();
+    loadData();
 </script>
 </body>
 </html>
