@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ca" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vincles — Un paratge natural, un tast, una experiència</title>
+  <meta name="description" content="Vincles és una experiència sensorial única que connecta les persones amb el vi en un paratge natural privilegiat a Banyoles, Girona.">
+  <meta property="og:title" content="Vincles — Un paratge natural, un tast, una experiència">
+  <meta property="og:description" content="Una experiència sensorial única que connecta les persones amb el vi.">
+  <meta property="og:url" content="https://vincles.vin">
+  <meta property="og:site_name" content="Vincles">
+  <meta property="og:locale" content="ca_ES">
+  <meta property="og:type" content="website">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            playfair: ['Playfair Display', 'serif'],
+            inter: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            beige: '#C9BDB2',
+            'beige-light': '#D4C8BD',
+            wine: '#A11842',
+            'wine-dark': '#6B1530',
+            burgundy: '#3D1020',
+            gold: '#C9B84C',
+            dark: '#1A1A1A',
+            darker: '#0D0D0D',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    ::selection { background-color: #A1184260; color: white; }
+
+    .hero-gradient {
+      background:
+        radial-gradient(ellipse at 20% 50%, #C9BDB2 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, #D4B8A8 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, #A11842 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, #C9BDB2 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 70%, #8B4060 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 90%, #3D1020 0%, transparent 50%);
+      background-color: #7A2040;
+    }
+
+    .cta-gradient {
+      background:
+        radial-gradient(ellipse at 20% 50%, #C9BDB2 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, #D4B8A8 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, #A11842 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, #C9BDB2 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 70%, #8B4060 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 90%, #3D1020 0%, transparent 50%);
+      background-color: #7A2040;
+    }
+
+    .result-gradient {
+      background:
+        radial-gradient(ellipse at 20% 30%, #A11842 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, #6B1530 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 20%, #C9B84C15 0%, transparent 40%);
+      background-color: #3D1020;
+    }
+
+    .hero-title {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+    .hero-subtitle {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+    .hero-cta {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-section.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step-content {
+      animation: stepIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .budget-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 2px;
+      background: rgba(107, 21, 48, 0.2);
+      outline: none;
+    }
+    .budget-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #A11842;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(161, 24, 66, 0.3);
+    }
+    .budget-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #A11842;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(161, 24, 66, 0.3);
+    }
+
+    /* Page transitions */
+    .page { display: none; }
+    .page.active { display: block; }
+  </style>
+</head>
+<body class="antialiased bg-[#1A1A1A] text-white">
+  <div class="mx-auto w-full">
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-10 bg-[#1A1A1A]/95 backdrop-blur-md transition-all duration-500 opacity-0 pointer-events-none">
+      <button onclick="closeMobileMenu()" class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl leading-none transition-colors" aria-label="Tancar menú">&times;</button>
+      <a href="#/" onclick="closeMobileMenu()" class="font-playfair text-3xl text-white/80 hover:text-white transition-colors">Inici</a>
+      <a href="#/serveis" onclick="closeMobileMenu()" class="font-playfair text-3xl text-white/80 hover:text-white transition-colors">Serveis</a>
+      <a href="#/" onclick="closeMobileMenu(); setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)" class="font-playfair text-3xl text-white/80 hover:text-white transition-colors">Sobre Vincles</a>
+      <a href="#/" onclick="closeMobileMenu(); setTimeout(()=>document.getElementById('contacte')?.scrollIntoView({behavior:'smooth'}),100)" class="font-playfair text-3xl text-white/80 hover:text-white transition-colors">Contacte</a>
+    </div>
+
+    <!-- ==================== PAGE: HOME ==================== -->
+    <div id="page-home" class="page">
+      <main class="overflow-x-hidden">
+
+        <!-- Hero -->
+        <section class="relative flex min-h-[100svh] flex-col overflow-hidden">
+          <div class="absolute inset-0 hero-gradient"></div>
+
+          <!-- Nav -->
+          <nav class="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-7">
+            <a href="#/" class="font-playfair text-xl tracking-[0.15em] text-white">VINCLES</a>
+            <div class="hidden items-center gap-10 md:flex">
+              <a href="#/serveis" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white">Serveis</a>
+              <a href="#/" onclick="setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Sobre Vincles</a>
+              <a href="#/" onclick="setTimeout(()=>document.getElementById('contacte')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Contacte</a>
+            </div>
+            <button onclick="openMobileMenu()" class="text-white/70 transition-colors hover:text-white md:hidden" aria-label="Obrir menú">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="3" y1="7" x2="21" y2="7"></line>
+                <line x1="3" y1="17" x2="21" y2="17"></line>
+              </svg>
+            </button>
+          </nav>
+
+          <!-- Hero content -->
+          <div class="relative z-10 mx-auto flex flex-1 w-full max-w-5xl flex-col items-center justify-center px-6">
+            <div class="flex flex-col items-center text-center">
+              <h1 class="font-playfair text-[clamp(3.5rem,10vw,9rem)] font-normal tracking-[0.02em] text-white leading-none hero-title">VINCLES</h1>
+              <p class="mt-6 max-w-lg text-[clamp(0.875rem,2vw,1.25rem)] font-light tracking-[0.12em] text-white/60 hero-subtitle">
+                La teva sommelier de confiança.<br>T'ajudem a triar el vi perfecte.
+              </p>
+              <a href="#/prova" class="mt-10 rounded-full bg-white/90 px-10 py-3.5 text-[13px] font-medium tracking-[0.18em] text-[#3D1020] shadow-lg shadow-black/10 transition-all duration-500 hover:bg-white hero-cta sm:px-14 sm:py-4 sm:text-sm">Prova-ho</a>
+            </div>
+          </div>
+
+          <!-- Scroll indicator -->
+          <div class="relative z-10 flex justify-center pb-12 hero-cta">
+            <div class="h-10 w-px bg-gradient-to-b from-transparent to-white/25"></div>
+          </div>
+        </section>
+
+        <!-- About -->
+        <section id="sobre" class="bg-[#C9BDB2] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section mx-auto flex max-w-3xl flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#6B1530]">Què és Vincles</span>
+              <h2 class="mt-10 font-playfair text-[clamp(1.75rem,4vw,3.5rem)] italic font-normal leading-snug text-[#1A1A1A] md:leading-[1.15]">El vincle entre les persones i el vi</h2>
+              <p class="mt-8 max-w-xl text-base font-light leading-[1.85] text-[#1A1A1A]/65 sm:text-lg">
+                Vincles connecta restaurants i clients amb els vins que realment encaixen. Una selecció curada per una sommelier que entén tant el paladar com el context: el plat, l'ocasió i el pressupost.
+              </p>
+              <div class="mt-10 h-px w-14 bg-[#A11842]/50"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- How it works -->
+        <section id="com-funciona" class="bg-[#1A1A1A] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#C9BDB2]">Com funciona</span>
+              <h2 class="mt-8 font-playfair text-[clamp(1.75rem,3.5vw,3rem)] italic font-normal text-white">Tres passos cap al vi ideal</h2>
+            </div>
+
+            <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-14 sm:mt-20 md:grid-cols-3 md:gap-8 lg:gap-12">
+              <div class="reveal-section group flex flex-col gap-5">
+                <div class="relative h-0 w-full overflow-hidden bg-[#2A2A2A]" style="padding-bottom:75%">
+                  <img src="https://images.unsplash.com/photo-1761489179799-c8ecad6ec719?w=800&q=80" alt="Tria el teu estil" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
+                </div>
+                <span class="mt-1 font-playfair text-xs italic tracking-[0.2em] text-[#C9BDB2]/70">01</span>
+                <h3 class="font-playfair text-[clamp(1.25rem,2vw,1.75rem)] italic font-normal text-white">Tria el teu estil</h3>
+                <p class="text-[15px] font-light leading-[1.75] text-white/45">Escull el tipus de vi que busques: blanc, negre, rosat, taronja o escumós. Cada paladar és únic.</p>
+              </div>
+              <div class="reveal-section group flex flex-col gap-5" style="transition-delay:150ms">
+                <div class="relative h-0 w-full overflow-hidden bg-[#2A2A2A]" style="padding-bottom:75%">
+                  <img src="https://images.unsplash.com/photo-1646686940298-41272bc3f127?w=800&q=80" alt="Defineix l'aventura" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
+                </div>
+                <span class="mt-1 font-playfair text-xs italic tracking-[0.2em] text-[#C9BDB2]/70">02</span>
+                <h3 class="font-playfair text-[clamp(1.25rem,2vw,1.75rem)] italic font-normal text-white">Defineix l'aventura</h3>
+                <p class="text-[15px] font-light leading-[1.75] text-white/45">Vols un clàssic de confiança o prefereixes explorar? El nivell d'atreviment marca la diferència.</p>
+              </div>
+              <div class="reveal-section group flex flex-col gap-5" style="transition-delay:300ms">
+                <div class="relative h-0 w-full overflow-hidden bg-[#2A2A2A]" style="padding-bottom:75%">
+                  <img src="https://images.unsplash.com/photo-1750271328328-64ebf9c6e0b0?w=800&q=80" alt="Rep la recomanació" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
+                </div>
+                <span class="mt-1 font-playfair text-xs italic tracking-[0.2em] text-[#C9BDB2]/70">03</span>
+                <h3 class="font-playfair text-[clamp(1.25rem,2vw,1.75rem)] italic font-normal text-white">Rep la recomanació</h3>
+                <p class="text-[15px] font-light leading-[1.75] text-white/45">Et suggerim el vi perfecte amb la seva història, maridatge i el motiu pel qual és ideal per a tu.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="bg-[#C9BDB2] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section mx-auto flex max-w-3xl flex-col items-center text-center">
+              <span class="font-playfair text-[80px] italic leading-[0.4] text-[#A11842]/12 select-none sm:text-[100px] md:text-[120px]">&ldquo;</span>
+              <blockquote class="mt-2 font-playfair text-[clamp(1.25rem,3vw,2.25rem)] italic font-normal leading-[1.5] text-[#1A1A1A]">
+                Triar un vi no hauria de ser difícil. Hauria de ser un descobriment, un moment de connexió amb el que t'agrada.
+              </blockquote>
+              <cite class="mt-8 text-xs not-italic tracking-[0.15em] text-[#1A1A1A]/40 sm:text-sm">— Maria Pont, Sommelier</cite>
+            </div>
+          </div>
+        </section>
+
+        <!-- Full-width image -->
+        <section class="relative h-[40vh] overflow-hidden sm:h-[50vh] md:h-[60vh]">
+          <img src="https://images.unsplash.com/photo-1700251556292-58c716021376?w=1600&q=80" alt="Restaurant amb vistes" class="h-full w-full object-cover" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-b from-[#1A1A1A] via-transparent to-[#1A1A1A]"></div>
+        </section>
+
+        <!-- CTA -->
+        <section class="relative overflow-hidden py-24 sm:py-32">
+          <div class="absolute inset-0 cta-gradient"></div>
+          <div class="relative z-10 mx-auto max-w-6xl px-6">
+            <div class="reveal-section mx-auto flex max-w-2xl flex-col items-center text-center">
+              <h2 class="font-playfair text-[clamp(1.75rem,4vw,3.5rem)] italic font-normal leading-snug text-white">Descobreix el teu vi ideal</h2>
+              <p class="mt-6 max-w-md text-base font-light tracking-wide text-white/55 sm:text-lg">Respon 3 preguntes i et recomanem el vi perfecte per a tu.</p>
+              <a href="#/prova" class="mt-10 rounded-full bg-white px-10 py-4 text-[13px] font-medium tracking-[0.18em] text-[#1A1A1A] shadow-lg shadow-black/10 transition-all duration-300 hover:bg-white/90 sm:px-14 sm:py-5 sm:text-sm">Prova-ho</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contacte" class="border-t border-white/[0.06] bg-[#0D0D0D]">
+          <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+            <div class="grid grid-cols-2 gap-10 sm:grid-cols-4 sm:gap-8">
+              <div class="col-span-2 sm:col-span-1">
+                <span class="font-playfair text-2xl text-white">VINCLES</span>
+                <p class="mt-3 text-sm font-light leading-relaxed text-white/30">La teva sommelier<br>de confiança.</p>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Navegació</h4>
+                <ul class="mt-4 space-y-3">
+                  <li><a href="#/serveis" class="text-sm text-white/30 transition-colors duration-300 hover:text-white/60">Serveis</a></li>
+                  <li><a href="#/" onclick="setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)" class="text-sm text-white/30 transition-colors duration-300 hover:text-white/60 cursor-pointer">Sobre Vincles</a></li>
+                  <li><a href="#/" onclick="setTimeout(()=>document.getElementById('contacte')?.scrollIntoView({behavior:'smooth'}),100)" class="text-sm text-white/30 transition-colors duration-300 hover:text-white/60 cursor-pointer">Contacte</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Contacte</h4>
+                <ul class="mt-4 space-y-3 text-sm text-white/30">
+                  <li>maria33pont@gmail.com</li>
+                  <li>689 259 026</li>
+                  <li>Olot, Girona</li>
+                  <li><a href="https://instagram.com/vincles.vin" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">@vincles.vin</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Legal</h4>
+                <ul class="mt-4 space-y-3">
+                  <li><a href="#" class="text-sm text-white/30 transition-colors duration-300 hover:text-white/60">Política de privacitat</a></li>
+                  <li><a href="#" class="text-sm text-white/30 transition-colors duration-300 hover:text-white/60">Avís legal</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
+              <p class="text-xs text-white/20">&copy; 2026 Vincles. Tots els drets reservats.</p>
+            </div>
+          </div>
+        </footer>
+
+      </main>
+    </div>
+
+    <!-- ==================== PAGE: PROVA ==================== -->
+    <div id="page-prova" class="page">
+      <div class="relative flex min-h-[100svh] flex-col">
+        <div class="fixed inset-0 hero-gradient"></div>
+
+        <!-- Nav -->
+        <nav class="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-7">
+          <a href="#/" class="font-playfair text-xl tracking-[0.15em] text-white">VINCLES</a>
+          <div class="hidden items-center gap-10 md:flex">
+            <a href="#/serveis" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white">Serveis</a>
+            <a href="#/" onclick="setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Sobre Vincles</a>
+            <a href="#/" onclick="setTimeout(()=>document.getElementById('contacte')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Contacte</a>
+          </div>
+          <button onclick="openMobileMenu()" class="text-white/70 transition-colors hover:text-white md:hidden" aria-label="Obrir menú">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="3" y1="7" x2="21" y2="7"></line>
+              <line x1="3" y1="17" x2="21" y2="17"></line>
+            </svg>
+          </button>
+        </nav>
+
+        <!-- Progress -->
+        <div id="prova-progress" class="relative z-10 mx-auto w-full max-w-2xl px-6">
+          <div class="flex items-center justify-between text-[11px] tracking-wider text-white/70">
+            <span class="font-medium uppercase" id="prova-step-label">Tipus</span>
+            <span id="prova-step-counter">Pas 1 de 3</span>
+          </div>
+          <div class="mt-3 h-0.5 overflow-hidden rounded-full bg-white/20">
+            <div id="prova-progress-bar" class="h-full bg-white/80 transition-all duration-700 ease-out" style="width:33.3%"></div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-12 sm:py-20">
+
+          <!-- Step 0: Type -->
+          <div id="prova-step-0" class="w-full max-w-2xl step-content">
+            <h2 class="font-playfair text-[clamp(1.5rem,3vw,2.25rem)] italic font-normal text-white drop-shadow-sm">Quin tipus de vi busques?</h2>
+            <p class="mt-3 text-sm text-white/70">Escull el que millor s'adapti al teu moment</p>
+            <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5" id="wine-type-grid"></div>
+          </div>
+
+          <!-- Step 1: Risk -->
+          <div id="prova-step-1" class="w-full max-w-2xl step-content" style="display:none">
+            <h2 class="font-playfair text-[clamp(1.5rem,3vw,2.25rem)] italic font-normal text-white drop-shadow-sm">Quin nivell d'atreviment busques?</h2>
+            <p class="mt-3 text-sm text-white/70">Vols quelcom conegut o prefereixes explorar?</p>
+            <div class="mt-10 flex flex-col gap-4" id="risk-level-grid"></div>
+          </div>
+
+          <!-- Step 2: Budget -->
+          <div id="prova-step-2" class="w-full max-w-2xl step-content" style="display:none">
+            <h2 class="font-playfair text-[clamp(1.5rem,3vw,2.25rem)] italic font-normal text-white drop-shadow-sm">Quin és el teu pressupost?</h2>
+            <p class="mt-3 text-sm text-white/70">Selecciona el preu màxim que vols invertir</p>
+            <div class="mt-12 flex flex-col items-center gap-8">
+              <div class="flex items-baseline gap-1">
+                <span class="font-playfair text-[clamp(3.5rem,8vw,6rem)] font-normal text-white tabular-nums" id="budget-display">30</span>
+                <span class="font-playfair text-2xl font-normal text-white/80">&euro;</span>
+              </div>
+              <div class="w-full max-w-md">
+                <input type="range" min="5" max="100" step="5" value="30" class="budget-slider w-full" id="budget-slider" oninput="updateBudget(this.value)">
+                <div class="mt-4 flex justify-between text-[11px] tracking-wider text-white/50">
+                  <span>5&euro;</span><span>25&euro;</span><span>50&euro;</span><span>75&euro;</span><span>100&euro;+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result -->
+          <div id="prova-result" class="mx-auto w-full max-w-2xl fade-in" style="display:none"></div>
+
+          <!-- Navigation buttons -->
+          <div id="prova-nav" class="mx-auto mt-12 flex w-full max-w-2xl items-center justify-between">
+            <button onclick="provaBack()" id="prova-back-btn" class="flex items-center gap-2 rounded-full border bg-white/40 px-6 py-3 text-[13px] font-medium tracking-[0.08em] backdrop-blur-sm transition-all duration-300 border-white/10 text-[#6B1530]/20 cursor-default">
+              &lsaquo; Enrere
+            </button>
+            <button onclick="provaNext()" id="prova-next-btn" class="flex items-center gap-2 rounded-full px-8 py-3 text-[13px] font-medium tracking-[0.08em] transition-all duration-300 bg-white/20 text-white/30 cursor-default">
+              Següent &rsaquo;
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: SERVEIS ==================== -->
+    <div id="page-serveis" class="page">
+      <main class="overflow-x-hidden">
+
+        <!-- Hero -->
+        <section class="relative flex min-h-[100svh] flex-col overflow-hidden">
+          <div class="absolute inset-0 hero-gradient"></div>
+
+          <!-- Nav -->
+          <nav class="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-7">
+            <a href="#/" class="font-playfair text-xl tracking-[0.15em] text-white">VINCLES</a>
+            <div class="hidden items-center gap-10 md:flex">
+              <a href="#/serveis" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white">Serveis</a>
+              <a href="#/" onclick="setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Sobre Vincles</a>
+              <a href="#/" onclick="setTimeout(()=>document.getElementById('contacte')?.scrollIntoView({behavior:'smooth'}),100)" class="text-[13px] tracking-[0.1em] text-white/55 transition-colors duration-300 hover:text-white cursor-pointer">Contacte</a>
+            </div>
+            <button onclick="openMobileMenu()" class="text-white/70 transition-colors hover:text-white md:hidden" aria-label="Obrir menú">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="3" y1="7" x2="21" y2="7"></line>
+                <line x1="3" y1="17" x2="21" y2="17"></line>
+              </svg>
+            </button>
+          </nav>
+
+          <!-- Hero content -->
+          <div class="relative z-10 mx-auto flex flex-1 w-full max-w-5xl flex-col items-center justify-center px-6">
+            <div class="flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#C9BDB2] hero-title">Els nostres serveis</span>
+              <h1 class="mt-8 font-playfair text-[clamp(2rem,5vw,3.5rem)] italic font-normal leading-snug text-white hero-subtitle">Tot el que necessites per al teu vi</h1>
+              <p class="mt-6 max-w-lg text-[clamp(0.875rem,2vw,1.25rem)] font-light tracking-[0.12em] text-white/60 hero-cta">
+                Assessorament personalitzat per a restaurants i clients que volen treure el màxim del món del vi.
+              </p>
+            </div>
+          </div>
+
+          <div class="relative z-10 flex justify-center pb-12 hero-cta">
+            <div class="h-10 w-px bg-gradient-to-b from-transparent to-white/25"></div>
+          </div>
+        </section>
+
+        <!-- Què és Vincles -->
+        <section class="relative overflow-hidden bg-[#C9BDB2]">
+          <div class="relative z-10 mx-auto max-w-6xl px-6 py-24 sm:py-32">
+            <div class="reveal-section mx-auto flex max-w-3xl flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#6B1530]">Què és Vincles?</span>
+              <p class="mt-8 max-w-2xl text-base font-light leading-[1.85] text-[#1A1A1A]/75 sm:text-lg">
+                VINCLES és un servei de sommelier digital personalitzat per a restaurants, hotels, esdeveniments i particulars. T'assessoro en la selecció dels vins més adequats per a la teva carta, els teus clients i les teves necessitats.
+              </p>
+            </div>
+
+            <div class="mx-auto mt-16 grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12">
+              <div class="reveal-section flex flex-col items-center text-center">
+                <span class="text-3xl text-[#A11842]">◇</span>
+                <h3 class="mt-4 text-base font-semibold text-[#1A1A1A]">Personalització</h3>
+                <p class="mt-2 text-sm font-light leading-relaxed text-[#1A1A1A]/60">Cada recomanació s'adapta al teu paladar, context i pressupost.</p>
+              </div>
+              <div class="reveal-section flex flex-col items-center text-center" style="transition-delay:100ms">
+                <span class="text-3xl text-[#A11842]">&euro;</span>
+                <h3 class="mt-4 text-base font-semibold text-[#1A1A1A]">Preu correcte</h3>
+                <p class="mt-2 text-sm font-light leading-relaxed text-[#1A1A1A]/60">Vins de qualitat a preus justos, sense intermediaris innecessaris.</p>
+              </div>
+              <div class="reveal-section flex flex-col items-center text-center" style="transition-delay:200ms">
+                <span class="text-3xl text-[#A11842]">✦</span>
+                <h3 class="mt-4 text-base font-semibold text-[#1A1A1A]">Assessoria experta</h3>
+                <p class="mt-2 text-sm font-light leading-relaxed text-[#1A1A1A]/60">Consells professionals d'una sommelier amb experiència al territori.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Serveis grid -->
+        <section class="bg-[#1A1A1A] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#C9BDB2]">Els meus serveis</span>
+              <p class="mt-6 max-w-lg text-base font-light tracking-wide text-white/55 sm:text-lg">
+                Com a sommelier professional, ofereixo serveis personalitzats per a restaurants, hotels i particulars.
+              </p>
+            </div>
+
+            <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Elaboració de cartes de vins</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Disseny i curació de cartes de vins a mida per al teu restaurant o hotel, adaptades a la teva cuina i clientela.</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]" style="transition-delay:80ms">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Tasts personalitzats</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Organització de tasts de vins per a grups, empreses o events privats. Una experiència sensorial guiada.</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]" style="transition-delay:160ms">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Formacions de personal</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Formació per a equips de sala i hostaleria sobre servei de vins, maridatge i atenció al client.</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]" style="transition-delay:240ms">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Cursos de vins</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Cursos d'iniciació i aprofundiment per a amants del vi que volen aprendre a gaudir-ne més.</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]" style="transition-delay:320ms">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Enoturisme</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Assessorament i organització de rutes enoturístiques pel territori, visitant cellers i vinyes.</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06]" style="transition-delay:400ms">
+                <h3 class="font-playfair text-xl italic font-normal text-white">Venda de lots de vins</h3>
+                <p class="mt-4 text-sm font-light leading-[1.75] text-white/50">Selecció i venda de lots de vins personalitzats per a regals, empreses o consum particular.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Maria Pont -->
+        <section class="relative overflow-hidden bg-[#C9BDB2] py-24 sm:py-32">
+          <div class="relative z-10 mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#6B1530]">Recomanacions a xarxes socials</span>
+            </div>
+            <div class="reveal-section mx-auto mt-12 max-w-2xl rounded-3xl bg-white p-8 shadow-lg sm:p-12">
+              <h3 class="font-playfair text-2xl italic font-normal text-[#1A1A1A] sm:text-3xl">Maria Pont</h3>
+              <p class="mt-2 text-sm tracking-wide text-[#1A1A1A]/50">Sommelier · Olot, Girona</p>
+              <p class="mt-6 text-[15px] font-light leading-[1.85] text-[#1A1A1A]/70">
+                Sommelier professional amb passió pel vi i el territori. Comparteixo recomanacions de vins al meu Instagram, sempre amb un enfocament proper i honest. Cada vi que recomano l'he tastat, i cada celler que proposo l'he visitat.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contacte -->
+        <section id="serveis-contacte" class="bg-[#1A1A1A] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#C9BDB2]">Contacte</span>
+              <p class="mt-6 text-base font-light tracking-wide text-white/55 sm:text-lg">Tens alguna pregunta? No dubtis en escriure'm.</p>
+            </div>
+            <div class="reveal-section mx-auto mt-12 max-w-md">
+              <div class="flex flex-col gap-5">
+                <div class="flex items-center gap-4">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#A11842] text-xs text-white">●</span>
+                  <div>
+                    <span class="text-base font-semibold text-white">Maria Pont</span>
+                    <span class="block text-xs text-white/50">Sommelier</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#A11842] text-xs text-white">●</span>
+                  <div>
+                    <span class="text-base font-semibold text-white">689 259 026</span>
+                    <span class="block text-xs text-white/50">Telèfon / WhatsApp</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#A11842] text-xs text-white">●</span>
+                  <div>
+                    <span class="text-base font-semibold text-white">maria33pont@gmail.com</span>
+                    <span class="block text-xs text-white/50">Correu electrònic</span>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-8 text-center text-sm text-white/40">Horari d'atenció: De dilluns a diumenge · Resposta en menys de 24 hores</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Assistència 24h -->
+        <section class="bg-[#C9BDB2] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#6B1530]">Assistència 24h</span>
+              <h2 class="mt-8 font-playfair text-[clamp(1.75rem,3.5vw,2.5rem)] italic font-normal text-[#1A1A1A]">Assistència 24h</h2>
+              <p class="mt-4 text-base font-light text-[#1A1A1A]/65 sm:text-lg">Estic aquí per ajudar-te en qualsevol moment.</p>
+            </div>
+            <div class="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+              <div class="reveal-section flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm">
+                <h3 class="text-lg font-semibold text-[#1A1A1A]">WhatsApp</h3>
+                <p class="mt-3 text-sm font-light leading-relaxed text-[#1A1A1A]/60">Escriu-me directament per WhatsApp per a consultes ràpides.</p>
+                <a href="https://wa.me/34689259026" target="_blank" rel="noopener noreferrer" class="mt-5 rounded-full bg-[#A11842] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#8a1438]">Envia un missatge</a>
+              </div>
+              <div class="reveal-section flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm">
+                <h3 class="text-lg font-semibold text-[#1A1A1A]">Truca'm</h3>
+                <p class="mt-3 text-sm font-light leading-relaxed text-[#1A1A1A]/60">Truca'm directament si necessites una resposta immediata.</p>
+                <a href="tel:+34689259026" class="mt-5 rounded-full border border-[#A11842] px-6 py-2.5 text-sm font-medium text-[#A11842] transition-colors hover:bg-[#A11842] hover:text-white">689 259 026</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Valoracions -->
+        <section class="bg-[#1A1A1A] py-24 sm:py-32">
+          <div class="mx-auto max-w-6xl px-6">
+            <div class="reveal-section flex flex-col items-center text-center">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-[#C9BDB2]">Valoracions dels clients</span>
+              <h2 class="mt-8 font-playfair text-[clamp(1.75rem,3.5vw,2.5rem)] italic font-normal text-white">Valoracions dels clients</h2>
+              <p class="mt-4 text-base font-light text-white/55 sm:text-lg">El feedback dels qui confien en Vincles continuament.</p>
+            </div>
+            <div class="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8">
+                <p class="text-base font-semibold text-white">Joel Martínez</p>
+                <p class="mt-4 text-sm font-light italic leading-[1.75] text-white/50">&ldquo;La Maria ens va ajudar a renovar la carta de vins del restaurant. Els clients ho han notat i les vendes han pujat.&rdquo;</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8" style="transition-delay:100ms">
+                <p class="text-base font-semibold text-white">Laura Sánchez</p>
+                <p class="mt-4 text-sm font-light italic leading-[1.75] text-white/50">&ldquo;El tast que va organitzar per al nostre equip va ser increïble. Tothom va aprendre i gaudir molt.&rdquo;</p>
+              </div>
+              <div class="reveal-section rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8" style="transition-delay:200ms">
+                <p class="text-base font-semibold text-white">Pere Roig</p>
+                <p class="mt-4 text-sm font-light italic leading-[1.75] text-white/50">&ldquo;Gràcies a Vincles hem descobert vins de petits productors que encanten els nostres clients. Un servei imprescindible.&rdquo;</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="relative overflow-hidden py-24 sm:py-32">
+          <div class="absolute inset-0 cta-gradient"></div>
+          <div class="relative z-10 mx-auto max-w-6xl px-6">
+            <div class="reveal-section mx-auto flex max-w-2xl flex-col items-center text-center">
+              <h2 class="font-playfair text-[clamp(1.75rem,4vw,3rem)] italic font-normal leading-snug text-white">Comparteix la teva experiència</h2>
+              <p class="mt-6 max-w-md text-base font-light tracking-wide text-white/55 sm:text-lg">Prova el nostre recomanador de vins i descobreix el teu vi ideal.</p>
+              <a href="#/prova" class="mt-10 rounded-full bg-white px-10 py-4 text-[13px] font-medium tracking-[0.18em] text-[#1A1A1A] shadow-lg shadow-black/10 transition-all duration-300 hover:bg-white/90 sm:px-14 sm:py-5 sm:text-sm">Prova-ho</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/[0.06] bg-[#0D0D0D]">
+          <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+            <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+              <a href="#/" class="font-playfair text-2xl text-white">VINCLES</a>
+              <p class="text-xs text-white/20">&copy; 2026 Vincles. Tots els drets reservats.</p>
+            </div>
+          </div>
+        </footer>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script>
+    /* ─── Wine Data ─── */
+    const wines = [{"name":"Missatger Autòcton","region":"Empordà","type":"blanc","style":"sec","risk":"diferent","price":14,"description":"Macabeu i Garnatxa blanca de les vinyes més joves del celler situades a Masarac, a l'Alt Empordà. Fet per en David Pujol Cargol. Un blanc energètic, viu i lluminós, amb una expressió purament mediterrània."},{"name":"Soci","region":"Penedès","type":"blanc","style":"sec","risk":"aventura","price":11,"description":"En Ferran del Celler Clandestina elabora un vi accessible i amigable, elaborat amb raïms Xarel·lo a la regió de Penedès. Sense sulfits afegits i certificat com a orgànic i vegà, aquest vi convida a gaudir moments especials amb amics i familiars, recordant que el vi és per a tothom."},{"name":"Connexió Còsmica","region":"Penedès","type":"taronja","style":"maceració","risk":"aventura","price":15,"description":"Un vi que representa la lluita del Salva per revalorar la labor de la pagesia i dignificar la terra i aquells que la treballen. Elaborat amb Xarel·lo provinent de Rodonyà al Penedès, que macera lleugerament amb les seves pells durant 8 dies. Una ampolla fresca i vibrant, per obrir entre amics, per beure amb alegria, i per brindar per les coses bones."},{"name":"Cucu Barco del Corneta","region":"Rueda","type":"blanc","style":"sec","risk":"diferent","price":12,"description":"Vi blanc ecològic de la VT Castella i Lleó, elaborat pel celler Vaixell del Corneta a La Seca, Valladolid. Monovarietal de raïm Verdejo, concebut com una versió accessible i jove, caracteritzat per la seva frescor, aromes cítrics i anisats, acidesa vibrant i una criança de 8 mesos sobre les líes."},{"name":"Quinta do Couselo","region":"Rías Baixas","type":"blanc","style":"sec","risk":"classic","price":16,"description":"Quinta de Couselo és un històric celler situat a O Rosal (Pontevedra), dins la DO Rías Baixas, que elabora vins albariños d'alta qualitat reconeguts per la seva frescor, complexitat i criança sobre les mares. Amb arrels vinculades al Monestir d'Oia des del segle XII, la finca destaca pel seu entorn atlàntic i els característics pins centenaris."},{"name":"Petit Chablis","region":"Borgogne","type":"blanc","style":"sec","risk":"classic","price":22,"description":"La Maison Louis Jadot és un dels cellers històrics de Bourgogne. Amb un gran reconeixement a nivell mundial s'ha posicionat com un dels actors més grans de la regió. Aquest vi és la màxima expressió del que la noble raïm Chardonnay és capaç de fer a les famoses vessants calcàries de la regió. El vi és perfumat, viu, net i amb un acabat cruixent."},{"name":"Gelber Muskateler Muster","region":"Àustria","type":"blanc","style":"aromàtic","risk":"aventura","price":28,"description":"Vi natural d'Àustria fet per la Maria i en Sepp Muster, conegut per la seva frescor aromàtica, espècies i delicada mineralitat. Creix sobre sòl d'Opok (marga calcària) i fa la criança amb fustes de roure durant dotze mesos."},{"name":"Arracades de la Mar","region":"Penedès","type":"taronja","style":"maceració","risk":"aventura","price":18,"description":"Vi taronja macerat amb una part de les pells quasi 6 mesos en gerres de fang, fet per la Mar a Subirats, recuperant les vinyes de Macabeu i Xarel·lo del tiet d'en Lluís."},{"name":"Orange Censurat","region":"Penedès","type":"taronja","style":"maceració","risk":"aventura","price":20,"description":"El Ferran aconsegueix en aquest vi l'expressió profunda i intrínseca de la Carinyena blanca. Els raïms es desrapen al celler i fermenten amb les seves pells durant 30 dies. Posteriorment el vi reposa en àmfores abans de ser embotellat, sense filtrats ni clarificats. Un deliciós vi orange que uneix força i talent."},{"name":"Sarau","region":"Empordà","type":"taronja","style":"maceració","risk":"aventura","price":16,"description":"En Jordi recupera les vinyes de Rabós d'Empordà respectant al màxim la pròpia naturalesa del fruit amb la mínima intervenció. Els raïms són seleccionats i premsats suaument. Després, el most obtingut macera amb les pells i fermenta de manera espontània amb llevats autòctons en dipòsits d'acer inoxidable."},{"name":"Amat Rosat","region":"Penedès","type":"rosat","style":"sec","risk":"diferent","price":13,"description":"El 'viamic' reivindica una percepció subjectiva del món i del vi. És un espai per dialogar i imaginar entre amics on el 4G no podrà arribar mai. L'Amat és un vi rosat ecològic elaborat amb raïms de Garnatxa i Ull de Llebre que provenen de Font-Rubí a l'Alt Penedès. Sincer, fresc i fragant."},{"name":"Els Nanos","region":"Conca de Barberà","type":"blanc","style":"sec","risk":"diferent","price":11,"description":"Un blanc honest i directe de la Conca de Barberà, elaborat amb varietats autòctones. Fresc i desenfadat, amb notes de fruita blanca i un toc herbaci que recorda els camps de la comarca. Un vi per compartir sense protocols, fet amb la cura dels petits productors."},{"name":"Pell de Seda","region":"Empordà","type":"blanc","style":"sec","risk":"diferent","price":15,"description":"Un blanc empordanès que fa honor al seu nom: sedós i delicat al paladar. Elaborat amb varietats mediterrànies, ofereix aromes florals i de fruita de pinyol, amb una textura suau i un final llarg que evoca la brisa de la Tramuntana."},{"name":"Abrunet Rosat","region":"Terra Alta","type":"rosat","style":"sec","risk":"diferent","price":10,"description":"Rosat de la Terra Alta elaborat amb Garnatxa negra, una varietat que troba la seva millor expressió en aquesta comarca. De color pàl·lid i brillant, destaca per les seves notes de maduixa, cireres i un punt floral. Fresc i lleuger, perfecte per a l'estiu mediterrani."},{"name":"Corrent Negre","region":"Mallorca","type":"negre","style":"menys cos","risk":"diferent","price":13,"description":"Un negre mallorquí que flueix com un corrent d'aigua fresca. Elaborat amb varietats autòctones de l'illa, ofereix fruita vermella vibrant, un cos lleuger i una frescor sorprenent. Un vi mediterrani amb caràcter insular, ideal per gaudir sense complicacions."},{"name":"Gratitud","region":"Empordà","type":"negre","style":"menys cos","risk":"diferent","price":16,"description":"Un negre empordanès que expressa l'agraïment cap a la terra i el treball de la vinya. Elaborat amb Garnatxa i Carinyena, mostra la cara més elegant de l'Empordà amb fruita madura, espècies fines i un toc mineral que recorda el sòl de llicorella."},{"name":"Estrem","region":"Priorat","type":"negre","style":"més cos","risk":"aventura","price":35,"description":"Un Priorat que porta el seu nom amb orgull: extrem en intensitat, profunditat i caràcter. Garnatxa i Carinyena de vinyes velles sobre llicorella, amb una concentració mineral que parla de pendents impossibles i sòls ancestrals. Un vi per als qui busquen l'essència més pura del Priorat."},{"name":"Vespres","region":"Montsant","type":"negre","style":"menys cos","risk":"diferent","price":14,"description":"Com les últimes hores de llum del dia, aquest Montsant ofereix calidesa i serenitat. Garnatxa i Carinyena que aporten fruita negra madura, herbes aromàtiques i una estructura amable. Un vi per acompanyar converses llargues quan el sol es pon."},{"name":"Inici","region":"Priorat","type":"negre","style":"menys cos","risk":"diferent","price":22,"description":"El punt de partida per descobrir el Priorat sense intimidar-se. Un vi accessible que manté l'esperit mineral i la intensitat de la comarca, amb fruita fresca, tànins polits i un final especiat. La porta d'entrada perfecta al món dels grans vins catalans."},{"name":"Volador","region":"Montsant","type":"negre","style":"menys cos","risk":"diferent","price":10,"description":"Un Montsant lleuger i juganer que vol per sobre dels convencialismes. Garnatxa jove i vibrant, amb molta fruita vermella, un cos àgil i una beguda fàcil. Un vi desimbolt que convida a deixar-se endur sense pensar-hi massa."},{"name":"Haleluya","region":"Priorat","type":"negre","style":"més cos","risk":"aventura","price":40,"description":"Un vi que és una celebració en si mateix. Priorat de vinyes velles amb una complexitat que sorprèn a cada glop: fruita confitada, minerals, espècies orientals i un cos ple que persisteix en boca durant minuts. Per als moments que demanen reverència."},{"name":"Missatger Negre","region":"Empordà","type":"negre","style":"menys cos","risk":"diferent","price":16,"description":"El germà fosc del Missatger Autòcton. Garnatxa negra i Carinyena de les vinyes de Masarac, amb la mateixa energia mediterrània però expressada en clau de fruita negra, garrriga i un toc de terra humida. Un missatger de l'Empordà més autèntic."},{"name":"Conde Valdemar","region":"Rioja","type":"negre","style":"més cos","risk":"classic","price":10,"description":"Un Rioja clàssic i fiable de Bodegas Valdemar. Tempranillo amb criança que ofereix fruita madura, vainilla subtil i un cos equilibrat. El company perfecte per a qualsevol àpat, amb la consistència que ha fet famosa la Rioja arreu del món."},{"name":"Cepa 21","region":"Ribera del Duero","type":"negre","style":"més cos","risk":"classic","price":18,"description":"Ribera del Duero modern i elegant, creat per la família Moro. Tempranillo pur que combina potència i finesa, amb fruita negra intensa, roure ben integrat i tànins sedosos. Un vi amb personalitat que representa el millor de la Ribera contemporània."},{"name":"Contino","region":"Rioja","type":"negre","style":"més cos","risk":"classic","price":25,"description":"Contino és un dels cellers de referència de la Rioja Alavesa. Elaborat com un vi de finca única, ofereix una expressió clàssica i complexa del Tempranillo amb notes de fruita vermella madura, espècies dolces i un roure fi. Un vi amb història i elegància."},{"name":"Château des Jacques Morgon","region":"Borgogne","type":"negre","style":"menys cos","risk":"diferent","price":22,"description":"Del prestigiós Château des Jacques, propietat de la Maison Louis Jadot, aquest Morgon és un dels millors exemples del cru Beaujolais. Gamay sobre sòls de granit que dóna un vi amb cos, estructura i notes de fruita negra, espècies i un toc mineral. Un descobriment per als amants dels grans vins francesos."},{"name":"Foradori Rosso","region":"Itàlia","type":"negre","style":"més cos","risk":"aventura","price":28,"description":"Elisabetta Foradori és una de les productores més respectades d'Itàlia. Teroldego del Trentino cultivat en biodinàmica, vinificat en àmfores de terracota. Un vi amb ànima: fruita pura, terrós, amb una profunditat i sinceritat que connecta directament amb la terra."},{"name":"At Roca Brut Nature","region":"Penedès","type":"escumos","style":"espurnejant","risk":"diferent","price":18,"description":"L'Agustí Torelló i la seva aposta pel cava d'alta qualitat. Brut Nature sense dosatge, elaborat amb Macabeu, Xarel·lo i Parellada de vinyes velles. Bombolles fines i persistents, aromes de fruita blanca, pa torrat i un final mineral. Un escumós que dignifica el Penedès."},{"name":"Joan Rubió Xarel·lo","region":"Penedès","type":"blanc","style":"sec","risk":"diferent","price":14,"description":"Un Xarel·lo amb caràcter propi, elaborat per en Joan Rubió al Penedès. Vi de finca amb una identitat clara: notes de fruita de pinyol, herbes mediterrànies i una mineralitat calcària que reflecteix el terroir. Fermentat amb llevats autòctons per preservar l'autenticitat."},{"name":"Llopart Brut Rosé","region":"Penedès","type":"escumos","style":"espurnejant","risk":"diferent","price":16,"description":"Cava rosat de la família Llopart, una de les cases més antigues del Penedès. Pinot Noir i Monastrell que aporten un color salmó delicat i aromes de fruits vermells i flors. Bombolles fines, fresc i elegant, perfecte per obrir qualsevol celebració."},{"name":"Portium","region":"Penedès","type":"blanc","style":"sec","risk":"classic","price":9,"description":"Un blanc del Penedès net i equilibrat, pensat per al dia a dia. Varietats autòctones que ofereixen frescor, notes cítriques i florals, amb un cos lleuger i una acidesa agradable. Un vi honest i sense pretensions, ideal per acompanyar la cuina mediterrània quotidiana."},{"name":"Champagne Heidsieck Brut Réserve","region":"Champagne","type":"escumos","style":"espurnejant","risk":"classic","price":45,"description":"Charles Heidsieck és una de les grans maisons de Champagne, fundada el 1851. El seu Brut Réserve és un assemblatge magistral amb una proporció excepcional de vins de reserva que li donen complexitat i profunditat. Notes de brioix, fruita confitada i avellanes torrades. Un champagne per als grans moments."}];
+
+    /* ─── Wine Types & Risk Levels ─── */
+    const wineTypes = [
+      { id: "escumos", label: "Escumós", color: "#C9B84C", accent: "#C9B84C15", desc: "Bombolles i celebració" },
+      { id: "blanc", label: "Blanc", color: "#C9BDB2", accent: "#C9BDB215", desc: "Fresc i lluminós" },
+      { id: "taronja", label: "Taronja", color: "#D4946A", accent: "#D4946A15", desc: "Contacte amb pells" },
+      { id: "rosat", label: "Rosat", color: "#C47A8A", accent: "#C47A8A15", desc: "Delicat i fragant" },
+      { id: "negre", label: "Negre", color: "#A11842", accent: "#A1184215", desc: "Cos i profunditat" },
+    ];
+
+    const riskLevels = [
+      { id: "classic", label: "Clàssic", desc: "Vins tradicionals i reconeguts", detail: "Denominacions conegudes, varietats establertes, sense sorpreses." },
+      { id: "diferent", label: "Una mica diferent", desc: "Vins amb caràcter i personalitat", detail: "Petits productors, regions menys conegudes, tocs d'autenticitat." },
+      { id: "aventura", label: "Em vull deixar portar", desc: "Sorprèn-me amb alguna cosa especial", detail: "Vins naturals, vinificacions alternatives, experiències úniques." },
+    ];
+
+    /* ─── Prova State ─── */
+    let provaStep = 0;
+    let selectedType = null;
+    let selectedRisk = null;
+    let budget = 30;
+    let result = null;
+
+    /* ─── Wine Matching ─── */
+    function getWine(type, risk, budget) {
+      const byType = wines.filter(w => w.type === type);
+      if (byType.length === 0) return wines[0];
+      let candidates = byType.filter(w => w.risk === risk);
+      if (candidates.length === 0) candidates = byType;
+      const inBudget = candidates.filter(w => w.price <= budget);
+      if (inBudget.length > 0) return inBudget.reduce((best, w) => w.price > best.price ? w : best);
+      return candidates.reduce((best, w) => w.price < best.price ? w : best);
+    }
+
+    /* ─── Mobile Menu ─── */
+    function openMobileMenu() {
+      const m = document.getElementById('mobileMenu');
+      m.classList.remove('opacity-0', 'pointer-events-none');
+      m.classList.add('opacity-100', 'pointer-events-auto');
+    }
+    function closeMobileMenu() {
+      const m = document.getElementById('mobileMenu');
+      m.classList.remove('opacity-100', 'pointer-events-auto');
+      m.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    /* ─── Router ─── */
+    function route() {
+      const hash = location.hash || '#/';
+      const path = hash.replace('#', '');
+
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      window.scrollTo(0, 0);
+
+      if (path === '/prova') {
+        document.getElementById('page-prova').classList.add('active');
+        resetProva();
+      } else if (path === '/serveis') {
+        document.getElementById('page-serveis').classList.add('active');
+        initRevealSections();
+      } else {
+        document.getElementById('page-home').classList.add('active');
+        initRevealSections();
+      }
+    }
+
+    window.addEventListener('hashchange', route);
+    window.addEventListener('DOMContentLoaded', () => {
+      buildWineTypeGrid();
+      buildRiskGrid();
+      route();
+    });
+
+    /* ─── Reveal Sections (Scroll Observer) ─── */
+    function initRevealSections() {
+      setTimeout(() => {
+        document.querySelectorAll('.page.active .reveal-section').forEach(el => {
+          el.classList.remove('revealed');
+          const obs = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+              el.classList.add('revealed');
+              obs.unobserve(el);
+            }
+          }, { threshold: 0.1 });
+          obs.observe(el);
+        });
+      }, 50);
+    }
+
+    /* ─── Build Wine Type Grid ─── */
+    function buildWineTypeGrid() {
+      const grid = document.getElementById('wine-type-grid');
+      grid.innerHTML = '';
+      wineTypes.forEach(w => {
+        const active = selectedType === w.id;
+        const btn = document.createElement('button');
+        btn.className = `group relative flex flex-col items-center gap-4 overflow-hidden rounded-2xl border-2 p-6 transition-all duration-300 sm:p-8 ${
+          active ? 'bg-white/80 shadow-lg shadow-black/5' : 'border-white/20 bg-white/50 hover:bg-white/65'
+        } ${w.id === 'negre' ? 'col-span-2 sm:col-span-1' : ''}`;
+        if (active) btn.style.borderColor = w.color;
+        btn.onmouseenter = () => { if (!active) btn.style.borderColor = w.color + '60'; };
+        btn.onmouseleave = () => { if (!active) btn.style.borderColor = ''; };
+        btn.onclick = () => { selectedType = w.id; buildWineTypeGrid(); updateProvaUI(); };
+        btn.innerHTML = `
+          <div class="flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 ${active ? 'scale-110' : 'group-hover:scale-105'}" style="background-color:${active ? w.color + '30' : w.accent}">
+            <div class="h-4 w-4 rounded-full" style="background-color:${w.color}"></div>
+          </div>
+          <div class="text-center">
+            <span class="block text-sm font-medium tracking-wide transition-colors ${active ? 'text-[#3D1020]' : 'text-[#6B1530]'}">${w.label}</span>
+            <span class="mt-1 block text-[11px] text-[#6B1530]/50">${w.desc}</span>
+          </div>`;
+        grid.appendChild(btn);
+      });
+    }
+
+    /* ─── Build Risk Grid ─── */
+    function buildRiskGrid() {
+      const grid = document.getElementById('risk-level-grid');
+      grid.innerHTML = '';
+      riskLevels.forEach((r, i) => {
+        const active = selectedRisk === r.id;
+        const bars = i + 1;
+        const btn = document.createElement('button');
+        btn.className = `group flex items-start gap-5 rounded-2xl border px-6 py-5 text-left transition-all duration-300 sm:px-8 sm:py-6 ${
+          active ? 'border-white/40 bg-white/80 shadow-lg shadow-black/5' : 'border-white/20 bg-white/50 hover:border-white/30 hover:bg-white/65'
+        }`;
+        btn.onclick = () => { selectedRisk = r.id; buildRiskGrid(); updateProvaUI(); };
+        let barsHtml = '';
+        for (let n = 1; n <= 3; n++) {
+          barsHtml += `<div class="h-5 w-1.5 rounded-full transition-colors duration-300 ${
+            n <= bars ? (active ? 'bg-[#A11842]' : 'bg-[#6B1530]/40') : 'bg-[#6B1530]/10'
+          }"></div>`;
+        }
+        btn.innerHTML = `
+          <div class="mt-1 flex gap-1">${barsHtml}</div>
+          <div class="flex-1">
+            <div class="text-base font-medium tracking-wide transition-colors ${active ? 'text-[#3D1020]' : 'text-[#6B1530]'}">${r.label}</div>
+            <div class="mt-1 text-sm text-[#6B1530]/50">${r.desc}</div>
+            ${active ? `<div class="mt-3 text-[13px] leading-relaxed text-[#6B1530]/40">${r.detail}</div>` : ''}
+          </div>`;
+        grid.appendChild(btn);
+      });
+    }
+
+    /* ─── Budget ─── */
+    function updateBudget(val) {
+      budget = Number(val);
+      document.getElementById('budget-display').textContent = budget >= 100 ? '100+' : String(budget);
+    }
+
+    /* ─── Prova Navigation ─── */
+    function updateProvaUI() {
+      const canNext = (provaStep === 0 && selectedType !== null) || (provaStep === 1 && selectedRisk !== null) || provaStep === 2;
+      const nextBtn = document.getElementById('prova-next-btn');
+      const backBtn = document.getElementById('prova-back-btn');
+
+      if (canNext) {
+        nextBtn.className = 'flex items-center gap-2 rounded-full px-8 py-3 text-[13px] font-medium tracking-[0.08em] transition-all duration-300 bg-white/90 text-[#3D1020] shadow-lg shadow-black/10 hover:bg-white cursor-pointer';
+      } else {
+        nextBtn.className = 'flex items-center gap-2 rounded-full px-8 py-3 text-[13px] font-medium tracking-[0.08em] transition-all duration-300 bg-white/20 text-white/30 cursor-default';
+      }
+
+      if (provaStep > 0) {
+        backBtn.className = 'flex items-center gap-2 rounded-full border bg-white/40 px-6 py-3 text-[13px] font-medium tracking-[0.08em] backdrop-blur-sm transition-all duration-300 border-white/30 text-[#6B1530] hover:bg-white/60 cursor-pointer';
+      } else {
+        backBtn.className = 'flex items-center gap-2 rounded-full border bg-white/40 px-6 py-3 text-[13px] font-medium tracking-[0.08em] backdrop-blur-sm transition-all duration-300 border-white/10 text-[#6B1530]/20 cursor-default';
+      }
+
+      nextBtn.textContent = provaStep === 2 ? 'Descobrir vi ›' : 'Següent ›';
+
+      const labels = ['Tipus', 'Atreviment', 'Pressupost'];
+      document.getElementById('prova-step-label').textContent = labels[provaStep];
+      document.getElementById('prova-step-counter').textContent = `Pas ${provaStep + 1} de 3`;
+      document.getElementById('prova-progress-bar').style.width = `${((provaStep + 1) / 3) * 100}%`;
+    }
+
+    function showProvaStep() {
+      for (let i = 0; i < 3; i++) {
+        document.getElementById(`prova-step-${i}`).style.display = i === provaStep ? 'block' : 'none';
+      }
+      document.getElementById('prova-result').style.display = 'none';
+      document.getElementById('prova-progress').style.display = '';
+      document.getElementById('prova-nav').style.display = '';
+      updateProvaUI();
+    }
+
+    function provaNext() {
+      const canNext = (provaStep === 0 && selectedType !== null) || (provaStep === 1 && selectedRisk !== null) || provaStep === 2;
+      if (!canNext) return;
+      if (provaStep < 2) {
+        provaStep++;
+        showProvaStep();
+      } else if (selectedType && selectedRisk) {
+        result = getWine(selectedType, selectedRisk, budget);
+        showResult();
+      }
+    }
+
+    function provaBack() {
+      if (provaStep > 0) {
+        provaStep--;
+        showProvaStep();
+      }
+    }
+
+    function showResult() {
+      for (let i = 0; i < 3; i++) document.getElementById(`prova-step-${i}`).style.display = 'none';
+      document.getElementById('prova-progress').style.display = 'none';
+      document.getElementById('prova-nav').style.display = 'none';
+
+      const el = document.getElementById('prova-result');
+      el.style.display = '';
+      el.innerHTML = `
+        <div class="overflow-hidden rounded-3xl border border-white/30 bg-white/70 shadow-2xl shadow-black/10 backdrop-blur-sm">
+          <div class="relative overflow-hidden px-8 py-10 sm:px-10 sm:py-12">
+            <div class="absolute inset-0 result-gradient"></div>
+            <div class="relative z-10">
+              <span class="text-[11px] font-medium uppercase tracking-[0.35em] text-white/70">La teva recomanació</span>
+              <h2 class="mt-4 font-playfair text-[clamp(1.75rem,4vw,2.75rem)] italic font-normal text-white">${result.name}</h2>
+              <div class="mt-4 flex flex-wrap items-center gap-4">
+                <span class="rounded-full border border-white/20 px-4 py-1.5 text-xs tracking-wide text-white/80">${result.region}</span>
+                <span class="rounded-full border border-white/20 px-4 py-1.5 text-xs tracking-wide text-white/80">~${result.price}&euro;</span>
+                <span class="rounded-full border border-white/20 px-4 py-1.5 text-xs tracking-wide text-white/80">${result.style}</span>
+              </div>
+            </div>
+          </div>
+          <div class="px-8 py-8 sm:px-10 sm:py-10">
+            <div class="h-px w-full bg-[#6B1530]/10"></div>
+            <div class="mt-8">
+              <span class="text-[11px] font-medium uppercase tracking-[0.25em] text-[#6B1530]/40">Descripció</span>
+              <p class="mt-4 text-[15px] font-light leading-[1.85] text-[#6B1530]/70">${result.description}</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <button onclick="resetProva()" class="flex items-center gap-2 rounded-full border border-[#6B1530]/20 bg-white/50 px-8 py-3 text-[13px] tracking-[0.12em] text-[#6B1530] transition-all duration-300 hover:bg-white/80">↻ Fer una altra cerca</button>
+          <a href="#/" class="flex items-center gap-2 text-[13px] tracking-[0.12em] text-[#6B1530]/40 transition-colors hover:text-[#6B1530]/70">Tornar a l'inici</a>
+        </div>`;
+    }
+
+    function resetProva() {
+      provaStep = 0;
+      selectedType = null;
+      selectedRisk = null;
+      budget = 30;
+      result = null;
+      document.getElementById('budget-slider').value = 30;
+      document.getElementById('budget-display').textContent = '30';
+      buildWineTypeGrid();
+      buildRiskGrid();
+      showProvaStep();
+    }
+  </script>
+</body>
+</html>
